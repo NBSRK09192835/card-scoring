@@ -1,0 +1,25 @@
+<div class="page-wrapper">
+  <h2>Sign Up</h2>
+
+  <form [formGroup]="signupForm" (ngSubmit)="doSignup()" class="form">
+    <label>Username</label>
+    <input formControlName="username" />
+
+    <label>Name</label>
+    <input formControlName="name" />
+
+    <label>Email</label>
+    <input type="email" formControlName="email" />
+
+    <label>Password</label>
+    <input type="password" formControlName="password" />
+
+    <label>Confirm Password</label>
+    <input type="password" formControlName="confirmPassword" />
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+  <p><a routerLink="/home">Back to Home</a></p>
+</div>

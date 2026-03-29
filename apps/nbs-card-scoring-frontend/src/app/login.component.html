@@ -1,0 +1,17 @@
+<div class="page-wrapper">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="doLogin()" class="form">
+    <label>Username</label>
+    <input formControlName="username" />
+
+    <label>Password</label>
+    <input type="password" formControlName="password" />
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+
+  <p><a routerLink="/home">Back to Home</a></p>
+</div>

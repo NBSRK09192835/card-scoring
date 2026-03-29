@@ -1,0 +1,43 @@
+[NX Daemon Server] - 2026-03-29T15:05:29.472Z - Started listening on: \\.\pipe\nx\C:\Users\admin\AppData\Local\Temp\d1b1afd89c784d9002b6\d.sock
+[NX Daemon Server] - 2026-03-29T15:05:29.479Z - [WATCHER]: Subscribed to changes within: D:\Repositories\card-scoring (native)
+[NX Daemon Server] - 2026-03-29T15:05:29.482Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-03-29T15:05:29.483Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-03-29T15:05:29.486Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-03-29T15:05:29.489Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-03-29T15:05:29.569Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-03-29T15:05:29.569Z - [REQUEST]: 
+[NX Daemon Server] - 2026-03-29T15:05:29.570Z - [REQUEST]: 
+
+ NX   Using `implicitDependencies` for global implicit dependencies configuration is no longer supported.
+
+Use "namedInputs" instead. You can run "nx repair" to automatically migrate your configuration.
+For more information about the usage of "namedInputs" see https://nx.dev/deprecated/global-implicit-dependencies#global-implicit-dependencies
+
+[NX Daemon Server] - 2026-03-29T15:05:30.006Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-03-29T15:05:30.008Z - Time taken for 'total for creating and serializing project graph' 517.6913ms
+[NX Daemon Server] - 2026-03-29T15:05:30.011Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-03-29T15:05:30.011Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 518. Response time: 5.
+[NX Daemon Server] - 2026-03-29T15:05:30.090Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2026-03-29T15:05:30.090Z - Time taken for 'Load Nx Plugin: D:\Repositories\card-scoring\node_modules\nx\src\plugins\project-json\build-nodes\package-json-next-to-project-json' 0.9188000000000329ms
+[NX Daemon Server] - 2026-03-29T15:05:30.090Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2026-03-29T15:05:30.091Z - Handled HASH_TASKS. Handling time: 7. Response time: 1.
+[NX Daemon Server] - 2026-03-29T15:05:31.919Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-03-29T15:05:31.922Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-03-29T15:05:31.923Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-03-29T15:05:31.927Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-03-29T15:05:31.928Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-03-29T15:05:31.928Z - Time taken for 'total for creating and serializing project graph' 1.6310999999996056ms
+[NX Daemon Server] - 2026-03-29T15:05:31.929Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-03-29T15:05:31.929Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-03-29T15:05:36.069Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:05:44.748Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:05:44.969Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:05:45.032Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:05:45.129Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:05:46.064Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:06:02.131Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-03-29T15:06:02.146Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-03-29T15:06:02.231Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2026-03-29T15:06:02.231Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2026-03-29T15:06:02.231Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-03-29T15:06:02.240Z - Closed a connection. Number of open connections: 0
