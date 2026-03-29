@@ -1,0 +1,53 @@
+{
+  "name": "nbs-card-scoring-backend",
+  "root": "apps/nbs-card-scoring-backend",
+  "sourceRoot": "apps/nbs-card-scoring-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/nbs-card-scoring-backend",
+        "main": "apps/nbs-card-scoring-backend/src/main.ts",
+        "tsConfig": "apps/nbs-card-scoring-backend/tsconfig.app.json",
+        "assets": ["apps/nbs-card-scoring-backend/src/assets"],
+        "fileReplacements": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "sourceMap": false,
+          "fileReplacements": []
+        },
+        "staging": {
+          "optimization": false,
+          "sourceMap": true,
+          "fileReplacements": []
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "nbs-card-scoring-backend:build",
+        "buildLibsFromSource": true,
+        "waitUntilTargets": ["nbs-card-scoring-backend:build"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/nbs-card-scoring-backend/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/nbs-card-scoring-backend"],
+      "options": {
+        "jestConfig": "apps/nbs-card-scoring-backend/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

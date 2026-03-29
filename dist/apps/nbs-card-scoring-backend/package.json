@@ -1,0 +1,7 @@
+{
+  "name": "nbs-card-scoring-backend",
+  "version": "0.0.1",
+  "module": "./src/main.js",
+  "type": "module",
+  "main": "./src/main.js"
+}
