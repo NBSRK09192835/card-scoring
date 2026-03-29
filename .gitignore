@@ -19,6 +19,12 @@
 /.angular-cli.json
 /.ng/
 
+# Nx build cache and output
+/.nx/
+/dist/
+/out-tsc/
+/coverage/
+
 # TypeScript cache
 *.tsbuildinfo
 
