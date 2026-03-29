@@ -5,6 +5,8 @@
   "scripts": {
     "nx": "nx",
     "start": "nx serve nbs-card-scoring-frontend --host localhost.shankar.com --port 1928",
+    "build:frontend:prod": "nx build nbs-card-scoring-frontend --configuration=production",
+    "build:frontend:staging": "nx build nbs-card-scoring-frontend --configuration=staging",
     "build:frontend": "nx build nbs-card-scoring-frontend",
     "build:backend": "nx build nbs-card-scoring-backend",
     "test": "nx test nbs-card-scoring-frontend",
