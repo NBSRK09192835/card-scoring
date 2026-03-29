@@ -1,0 +1,21 @@
+{
+  "npmScope": "nbs-card-scorer",
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nx/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test"]
+      }
+    }
+  },
+  "projects": {
+    "nbs-card-scoring-frontend": {},
+    "nbs-card-scoring-backend": {}
+  }
+}
