@@ -30,7 +30,7 @@ export class LoginComponent {
     this.message = res.message;
 
     if (res.success) {
-      this.router.navigate(['/home']);
+      this.router.navigate([`/${username}`]);
     }
   }
 }

@@ -94,6 +94,11 @@
   - `guestStart(guestName?)` creates temporary fields in sessionStorage
 
 ## 5) UI component behavior
+### Home component
+- route: `/home`
+- welcoming card at center with same style as login/signup (`max-width: 460px`, border `1px solid #ddd`, radius `8px`, `padding: 24px`)
+- actions: login, signup, guest buttons
+
 ### Login component
 - form controls: `username`, `password`
 - on submit: call `AuthService.login()`

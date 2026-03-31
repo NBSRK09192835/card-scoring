@@ -4,59 +4,75 @@
   align-items: center;
   min-height: 100vh;
   padding: 1rem;
-  background: #f8f9fc;
+  background: transparent;
 }
 
 .home-card {
   width: min(460px, 100%);
-  background: #ffffff;
+  min-height: 460px;
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.09);
   text-align: center;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.home-card h1 {
-  font-size: 1.45rem;
-  margin-bottom: 1.2rem;
+.home-title {
+  font-size: 1.8rem;
   color: #213a63;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.4rem;
 }
 
+.home-title div {
+  margin-bottom: 0.2rem;
+}
 
 .home-actions {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   gap: 0.8rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .home-link {
-  flex: 1;
-  padding: 12px 16px;
+  width: 46%;
+  padding: 12px 0;
   border: 2px solid #2c3e50;
   color: #2c3e50;
   text-decoration: none;
   font-weight: bold;
   border-radius: 8px;
   background: #f5f7fb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-link:hover {
   background: #eef2f9;
 }
 
-.guest-action {
-  margin-top: 1.4rem;
+.home-guest-link {
+  margin-top: 1rem;
+  justify-content: center;
+  display: flex;
 }
 
-.guest-link {
-  display: inline-block;
-  padding: 12px 24px;
-  background: #2c3e50;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
+.home-guest-anchor {
+  color: #2c3e50;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-align: center;
 }
+
 

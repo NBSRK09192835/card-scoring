@@ -1,25 +1,35 @@
-<div class="page-wrapper">
-  <h2>Sign Up</h2>
+<div class="page-shell">
+  <div class="page-wrapper">
+    <h2>Sign Up</h2>
 
   <form [formGroup]="signupForm" (ngSubmit)="doSignup()" class="form">
-    <label>Username</label>
-    <input formControlName="username" />
+    <div class="field-row">
+      <label>Username</label>
+      <input formControlName="username" />
+    </div>
 
-    <label>Name</label>
-    <input formControlName="name" />
+    <div class="field-row">
+      <label>Email</label>
+      <input type="email" formControlName="email" />
+    </div>
 
-    <label>Email</label>
-    <input type="email" formControlName="email" />
+    <div class="field-row">
+      <label>Password</label>
+      <input type="password" formControlName="password" />
+    </div>
 
-    <label>Password</label>
-    <input type="password" formControlName="password" />
+    <div class="field-row">
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword" />
+    </div>
 
-    <label>Confirm Password</label>
-    <input type="password" formControlName="confirmPassword" />
-
-    <button type="submit">Sign Up</button>
+    <div class="login-actions">
+      <button type="submit" class="primary">Sign Up</button>
+      <a routerLink="/home" class="secondary">Back</a>
+    </div>
   </form>
 
   <p class="message" *ngIf="message">{{ message }}</p>
   <p><a routerLink="/home">Back to Home</a></p>
+  </div>
 </div>

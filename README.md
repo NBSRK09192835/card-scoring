@@ -20,6 +20,7 @@ A full-stack card scoring app with Angular UI, local/session storage progress ma
 - `/home` with a welcome screen and sign-out reset
 - `/login`, `/signup`, `/guest` pages
 - home layout: `Login` and `Sign Up` aligned at left/right, plus `Guest login`
+- home card appears in the center and matches signup/login card size/style (max 460px)
 
 ## Styling
 - component styles now use SCSS (`*.component.scss`) instead of CSS

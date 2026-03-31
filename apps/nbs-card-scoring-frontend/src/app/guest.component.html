@@ -1,13 +1,20 @@
-<div class="page-wrapper">
-  <h2>Guest Login</h2>
+<div class="page-shell">
+  <div class="page-wrapper">
+    <h2>Guest Login</h2>
 
   <form [formGroup]="guestForm" (ngSubmit)="startGuest()" class="form">
-    <label>Optional guest name</label>
-    <input formControlName="username" placeholder="Enter guest name (optional)" />
+    <div class="field-row">
+      <label>Guest Name</label>
+      <input formControlName="username" placeholder="Enter guest name" />
+    </div>
 
-    <button type="submit">Enter as Guest</button>
+    <div class="login-actions">
+      <button type="submit" class="primary">Enter as Guest</button>
+      <a routerLink="/home" class="secondary">Back</a>
+    </div>
   </form>
 
   <p class="message" *ngIf="message">{{ message }}</p>
   <p><a routerLink="/home">Back to Home</a></p>
+  </div>
 </div>
