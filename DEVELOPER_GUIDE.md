@@ -48,6 +48,15 @@
 - `npx nx build nbs-card-scoring-frontend --configuration=production`
 - `npx nx build nbs-card-scoring-backend --configuration=production`
 
+## 6.1) Git branches + CI updates
+- GitHub Actions now runs on every commit for all branches
+- Node 20 for frontend/backend (explicit setup-node 20)
+- no Nx cache in CI; `npm install` for fresh dependency install each run
+
+## 6.2) Local cleanup
+- `.gitignore` includes `/.nx`, `/dist`, `/out-tsc`, `/coverage`
+- remove build outputs and `.nx` if previously checked in: `git rm -r --cached .nx dist out-tsc coverage`
+
 ## 7) Github Actions template notes
 - path: `.github/workflows/ci.yml`
 - Steps: checkout, setup-node, npm ci, lint, test, build(frontend+backend), optional deploy

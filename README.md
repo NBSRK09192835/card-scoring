@@ -15,6 +15,15 @@ A full-stack card scoring app with Angular UI, local/session storage progress ma
 2. **Signup**: username, password, confirm password, name, email, optional phone
 3. **Guest Mode**: session based, optional local persist on exit
 
+## Routing
+- base `/` and wildcard `/**` route to `/home`
+- `/home` with a welcome screen and sign-out reset
+- `/login`, `/signup`, `/guest` pages
+- home layout: `Login` and `Sign Up` aligned at left/right, plus `Guest login`
+
+## Styling
+- component styles now use SCSS (`*.component.scss`) instead of CSS
+
 ## Storage behavior
 - Auth data and user profile stored in localStorage (for registered users)
 - Guest progress in sessionStorage first, then prompt to save to localStorage before exiting

@@ -1,35 +1,53 @@
-.home-wrapper {
-  max-width: 900px;
-  margin: 48px auto;
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  background: #f8f9fc;
+}
+
+.home-card {
+  width: min(460px, 100%);
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09);
   text-align: center;
 }
+
+.home-card h1 {
+  font-size: 1.45rem;
+  margin-bottom: 1.2rem;
+  color: #213a63;
+}
+
 
 .home-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
+  gap: 0.8rem;
+  margin-top: 1rem;
 }
 
 .home-link {
-  width: 50%;
+  flex: 1;
   padding: 12px 16px;
   border: 2px solid #2c3e50;
   color: #2c3e50;
   text-decoration: none;
   font-weight: bold;
   border-radius: 8px;
+  background: #f5f7fb;
 }
 
-.home-link.left {
-  margin-right: 8px;
-}
-
-.home-link.right {
-  margin-left: 8px;
+.home-link:hover {
+  background: #eef2f9;
 }
 
 .guest-action {
-  margin-top: 20px;
+  margin-top: 1.4rem;
 }
 
 .guest-link {
@@ -41,3 +59,4 @@
   border-radius: 8px;
   font-weight: bold;
 }
+
