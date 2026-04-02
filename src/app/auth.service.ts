@@ -66,7 +66,14 @@ export class AuthService {
       return currentUser.username;
     }
     const guest = this.storage.getGuestSession();
-    return guest?.username || 'Guest';
+    if (guest?.username) {
+      return guest.username;
+    }
+    const localGuest = this.storage.getGuestLocal();
+    if (localGuest?.username) {
+      return localGuest.username;
+    }
+    return 'Guest';
   }
 
   saveGuestToLocal(): void {

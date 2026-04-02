@@ -17,7 +17,6 @@ export class PlayerSetupComponent implements OnInit {
     'Charlie'
   ];
 
-  playerDropdownOpen = false;
   showEditUsernameDialog = false;
   editUsernameValue = '';
 
@@ -61,8 +60,16 @@ export class PlayerSetupComponent implements OnInit {
     return this.setupForm.get('selectedPlayers')?.value || [];
   }
 
-  togglePlayerDropdown(): void {
-    this.playerDropdownOpen = !this.playerDropdownOpen;
+  onPlayerMultiSelectChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const values = Array.from(target.selectedOptions).map(opt => opt.value);
+    const updated = values.sort((a, b) => a.localeCompare(b));
+    this.setupForm.get('selectedPlayers')?.setValue(updated);
+    localStorage.setItem('player-setup-selected-players', JSON.stringify(updated));
+  }
+
+  get dropdownSize(): number {
+    return Math.min(this.availablePlayers.length, 7);
   }
 
   setPlayerSelection(player: string, checked: boolean): void {
@@ -73,7 +80,7 @@ export class PlayerSetupComponent implements OnInit {
       selected.delete(player);
     }
 
-    const updated = Array.from(selected);
+    const updated = Array.from(selected).sort((a, b) => a.localeCompare(b));
     this.setupForm.get('selectedPlayers')?.setValue(updated);
     localStorage.setItem('player-setup-selected-players', JSON.stringify(updated));
   }
@@ -85,12 +92,11 @@ export class PlayerSetupComponent implements OnInit {
     }
 
     if (!this.availablePlayers.map(p => p.toLowerCase()).includes(custom.toLowerCase())) {
-      this.availablePlayers.push(custom);
+      this.availablePlayers = [...this.availablePlayers, custom].sort((a, b) => a.localeCompare(b));
     }
 
     this.setPlayerSelection(custom, true);
     this.setupForm.get('customPlayer')?.setValue('');
-    this.playerDropdownOpen = false;
   }
 
   removePlayer(player: string): void {

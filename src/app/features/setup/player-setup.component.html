@@ -6,19 +6,19 @@
     </div>
 
     <p class="subtitle">Please select players from dropdown here:</p>
-    <div class="dropdown-wrapper">
-      <button type="button" class="dropdown-toggle" (click)="togglePlayerDropdown()">
-        {{ selectedPlayers.length }} selected
-      </button>
-      <div class="dropdown-panel" *ngIf="playerDropdownOpen">
-        <div class="dropdown-item" *ngFor="let player of availablePlayers">
-          <label>
-            <input type="checkbox" [checked]="selectedPlayers.includes(player)" (change)="setPlayerSelection(player, $event.target.checked)" />
-            {{ player }}
-          </label>
-        </div>
-      </div>
-    </div>
+    <label class="multi-select-label">
+      <select
+        class="multi-select"
+        multiple
+        [attr.size]="dropdownSize"
+        (change)="onPlayerMultiSelectChange($event)"
+      >
+        <option *ngFor="let player of availablePlayers" [value]="player" [selected]="selectedPlayers.includes(player)">
+          {{ player }}
+        </option>
+      </select>
+      <span class="selected-count">{{ selectedPlayers.length }} selected</span>
+    </label>
 
     <div class="field-row add-player-row">
       <input type="text" formControlName="customPlayer" placeholder="Enter Player Name" />
@@ -27,11 +27,13 @@
 
     <div class="selected-grid" *ngIf="selectedPlayers.length">
       <div class="grid-title">Selected players</div>
-      <div class="grid-row" *ngFor="let player of selectedPlayers">
-        <label>
-          <input type="checkbox" [checked]="true" (change)="removePlayer(player)" />
-          {{ player }}
-        </label>
+      <div class="grid-items">
+        <div class="grid-item" *ngFor="let player of selectedPlayers">
+          <label>
+            <input type="checkbox" [checked]="true" (change)="removePlayer(player)" />
+            {{ player }}
+          </label>
+        </div>
       </div>
     </div>
 

@@ -85,7 +85,8 @@
         },
         "staging": { "buildTarget": "nbs-card-scoring-frontend:build:staging" },
         "development": {
-          "buildTarget": "nbs-card-scoring-frontend:build:development"
+          "buildTarget": "nbs-card-scoring-frontend:build:development",
+          "poll": 3000
         }
       }
     },

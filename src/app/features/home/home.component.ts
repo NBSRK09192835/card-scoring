@@ -10,7 +10,8 @@ export class HomeComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    // Wild-card route (or returning to home) should sign out existing login state as requested.
+    // preserve guest state while logging out non-guest user
+    this.auth.saveGuestToLocal();
     this.auth.logout();
   }
 }
