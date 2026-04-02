@@ -17,6 +17,12 @@ export class GuestComponent {
     this.guestForm = this.fb.group({
       username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9@#$]+$/)]]
     });
+
+    // Keep guest username when returning to guest entry
+    const active = this.auth.getActiveUsername();
+    if (active) {
+      this.guestForm.get('username')?.setValue(active);
+    }
   }
 
   startGuest(): void {

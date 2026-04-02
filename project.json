@@ -84,7 +84,9 @@
           "buildTarget": "nbs-card-scoring-frontend:build:production"
         },
         "staging": { "buildTarget": "nbs-card-scoring-frontend:build:staging" },
-        "development": { "open": true }
+        "development": {
+          "buildTarget": "nbs-card-scoring-frontend:build:development"
+        }
       }
     },
     "lint": {

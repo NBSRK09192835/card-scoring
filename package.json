@@ -9,7 +9,7 @@
     "build:local": "nx build nbs-card-scoring-frontend --configuration=development",
     "build": "rm dist && nx build nbs-card-scoring-frontend",
     "start": "nx serve nbs-card-scoring-frontend",
-    "start:local": "nx serve nbs-card-scoring-frontend --configuration=development",
+    "start:local": "nx serve nbs-card-scoring-frontend --configuration=development --open",
     "test": "nx test nbs-card-scoring-frontend",
     "lint": "nx run nbs-card-scoring-frontend:lint",
     "format": "nx format:write"
