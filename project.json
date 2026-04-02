@@ -1,0 +1,76 @@
+{
+  "name": "nbs-card-scoring-frontend",
+  "root": ".",
+  "sourceRoot": "src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist",
+        "index": "src/index.html",
+        "main": "src/main.ts",
+        "polyfills": "src/polyfills.ts",
+        "tsConfig": "tsconfig.app.json",
+        "assets": ["src/favicon.ico", "src/assets"],
+        "styles": ["src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            { "replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts" }
+          ]
+        },
+        "staging": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": true,
+          "namedChunks": true,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": true,
+          "fileReplacements": [
+            { "replace": "src/environments/environment.ts", "with": "src/environments/environment.staging.ts" }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "buildTarget": "nbs-card-scoring-frontend:build",
+        "host": "0.0.0.0",
+        "port": 1928,
+        "publicHost": "http://localhost:1928",
+        "disableHostCheck": true
+      },
+      "configurations": {
+        "production": { "buildTarget": "nbs-card-scoring-frontend:build:production" },
+        "staging": { "buildTarget": "nbs-card-scoring-frontend:build:staging" }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage"],
+      "options": {
+        "jestConfig": "jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -2,7 +2,6 @@
   "extends": "./tsconfig.base.json",
   "files": [],
   "references": [
-    { "path": "./apps/nbs-card-scoring-frontend" },
-    { "path": "./apps/nbs-card-scoring-backend" }
+    { "path": "./" }
   ]
 }

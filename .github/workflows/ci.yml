@@ -7,7 +7,7 @@ on:
     branches: ['**']
 
 jobs:
-  backend:
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,25 +21,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Build backend
-        run: npm run build:backend
-
-  frontend:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Run unit tests
         run: npx nx test nbs-card-scoring-frontend --runInBand

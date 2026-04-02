@@ -15,7 +15,10 @@
     }
   },
   "projects": {
-    "nbs-card-scoring-frontend": {},
-    "nbs-card-scoring-backend": {}
+    "nbs-card-scoring-frontend": {
+      "root": ".",
+      "sourceRoot": "src",
+      "projectType": "application"
+    }
   }
 }

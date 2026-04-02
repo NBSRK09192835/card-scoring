@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build:frontend:prod",
-  "outputDirectory": "dist/apps/nbs-card-scoring-frontend",
+  "outputDirectory": "dist",
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
