@@ -8,7 +8,6 @@
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist",
         "index": "src/index.html",
         "main": "src/main.ts",
         "polyfills": "src/polyfills.ts",
@@ -22,6 +21,7 @@
       },
       "configurations": {
         "production": {
+          "outputPath": "dist/production",
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
@@ -37,6 +37,7 @@
           ]
         },
         "staging": {
+          "outputPath": "dist/staging",
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": true,
@@ -52,6 +53,7 @@
           ]
         },
         "development": {
+          "outputPath": "dist/development",
           "optimization": false,
           "outputHashing": "none",
           "sourceMap": true,
