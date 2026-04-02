@@ -7,7 +7,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { GuestComponent } from './features/guest/guest.component';
-import { PlayerSetupComponent } from './features/scoring/player-setup.component';
+import { PlayerSetupComponent } from './features/setup/player-setup.component';
 import { ScoreComponent } from './features/scoring/score.component';
 
 const routes: Routes = [
