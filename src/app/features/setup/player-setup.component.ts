@@ -10,7 +10,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PlayerSetupComponent implements OnInit {
   username = '';
   setupForm: FormGroup;
-  availablePlayers = ['A'];
+  availablePlayers = [
+    { content: 'Alice', selected: false },
+    { content: 'Bob', selected: false },
+    { content: 'Charlie', selected: false }
+  ];
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
     this.setupForm = this.fb.group({
@@ -30,25 +34,35 @@ export class PlayerSetupComponent implements OnInit {
       return;
     }
 
-    if (!this.availablePlayers.includes(custom)) {
-      this.availablePlayers = [...this.availablePlayers, custom];
+    const exists = this.availablePlayers.some(item => item.content.toLowerCase() === custom.toLowerCase());
+    if (!exists) {
+      this.availablePlayers = [...this.availablePlayers, { content: custom, selected: true }];
     }
 
     const selected = this.setupForm.get('selectedPlayers')?.value || [];
-    if (!selected.includes(custom)) {
-      this.setupForm.get('selectedPlayers')?.setValue([...selected, custom]);
+    if (!selected.some((item: { content: unknown; }) => item.content === custom)) {
+      const updatedSelected = [...selected, { content: custom, selected: true }];
+      this.setupForm.get('selectedPlayers')?.setValue(updatedSelected);
     }
 
     this.setupForm.get('customPlayer')?.setValue('');
   }
 
+
   continue(): void {
+    const selectedPlayers = this.setupForm.value.selectedPlayers || [];
+
+    if (!selectedPlayers || selectedPlayers.length === 0) {
+      this.setupForm.get('selectedPlayers')?.setErrors({ required: true });
+      this.setupForm.get('selectedPlayers')?.markAsTouched();
+      return;
+    }
+
     if (this.setupForm.invalid) {
       this.setupForm.markAllAsTouched();
       return;
     }
 
-    const selectedPlayers = this.setupForm.value.selectedPlayers;
     const lossPerHead = this.setupForm.value.lossPerHead;
 
     console.log('Continue configuration:', {

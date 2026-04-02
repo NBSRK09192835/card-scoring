@@ -5,13 +5,17 @@
 
     <form [formGroup]="setupForm" (ngSubmit)="continue()" class="form">
       <div class="field-row">
-        <label for="players">Player list (multi-select):</label>
-        <select id="players" formControlName="selectedPlayers" multiple>
-          <option *ngFor="let p of availablePlayers" [value]="p">{{ p }}</option>
-        </select>
-        <div class="validation" *ngIf="setupForm.get('selectedPlayers')?.touched && setupForm.get('selectedPlayers')?.invalid">
-          Please select at least one player.
-        </div>
+        <cds-dropdown
+          type="multi"
+          formControlName="selectedPlayers"
+          label="Player list (Select at least 1)"
+          placeholder="Select players"
+          [invalid]="setupForm.get('selectedPlayers')?.touched && setupForm.get('selectedPlayers')?.invalid"
+          invalidText="Please select at least one player."
+          helperText="Use the checkboxes to choose players or add a new one"
+        >
+          <cds-dropdown-list [items]="availablePlayers"></cds-dropdown-list>
+        </cds-dropdown>
       </div>
 
       <div class="field-row add-player-row">

@@ -9,6 +9,7 @@ import { SignupComponent } from './features/auth/signup/signup.component';
 import { GuestComponent } from './features/guest/guest.component';
 import { PlayerSetupComponent } from './features/setup/player-setup.component';
 import { ScoreComponent } from './features/scoring/score.component';
+import { DropdownModule } from 'carbon-components-angular';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,7 +24,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, SignupComponent, GuestComponent, PlayerSetupComponent, ScoreComponent],
-  imports: [BrowserModule, ReactiveFormsModule, FormsModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, ReactiveFormsModule, FormsModule, RouterModule.forRoot(routes), DropdownModule],
   providers: [],
   bootstrap: [AppComponent]
 })
