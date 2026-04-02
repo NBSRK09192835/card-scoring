@@ -10,7 +10,7 @@
     "start": "nx serve nbs-card-scoring-frontend",
     "start:local": "nx serve nbs-card-scoring-frontend --configuration=development",
     "test": "nx test nbs-card-scoring-frontend",
-    "lint": "nx lint nbs-card-scoring-frontend",
+    "lint": "nx run nbs-card-scoring-frontend:lint",
     "format": "nx format:write"
   },
   "dependencies": {
