@@ -48,14 +48,14 @@
       "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "nbs-card-scoring-frontend:build",
-        "host": "0.0.0.0",
         "port": 1928,
         "publicHost": "http://localhost:1928",
         "disableHostCheck": true
       },
       "configurations": {
         "production": { "buildTarget": "nbs-card-scoring-frontend:build:production" },
-        "staging": { "buildTarget": "nbs-card-scoring-frontend:build:staging" }
+        "staging": { "buildTarget": "nbs-card-scoring-frontend:build:staging" },
+        "development": { "open": true }
       }
     },
     "lint": {

@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home.component';
-import { LoginComponent } from './login.component';
-import { SignupComponent } from './signup.component';
-import { GuestComponent } from './guest.component';
+import { HomeComponent } from './features/home/home.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { SignupComponent } from './features/auth/signup/signup.component';
+import { GuestComponent } from './features/guest/guest.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'guest', component: GuestComponent },
+  // { path: 'scoring', component: ScoringComponent },
   { path: '**', redirectTo: 'home' }
 ];
 

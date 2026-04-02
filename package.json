@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "nx": "nx",
+    "build:prod": "nx build nbs-card-scoring-frontend --configuration=production",
+    "build:staging": "nx build nbs-card-scoring-frontend --configuration=staging",
+    "build": "nx build nbs-card-scoring-frontend",
     "start": "nx serve nbs-card-scoring-frontend",
-    "build:frontend:prod": "nx build nbs-card-scoring-frontend --configuration=production",
-    "build:frontend:staging": "nx build nbs-card-scoring-frontend --configuration=staging",
-    "build:frontend": "nx build nbs-card-scoring-frontend",
+    "start:local": "nx serve nbs-card-scoring-frontend --configuration=development",
     "test": "nx test nbs-card-scoring-frontend",
     "lint": "nx lint nbs-card-scoring-frontend",
     "format": "nx format:write"
