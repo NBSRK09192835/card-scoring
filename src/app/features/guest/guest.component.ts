@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 
@@ -14,7 +14,7 @@ export class GuestComponent {
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.guestForm = this.fb.group({
-      username: ['']
+      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9@#$]+$/)]]
     });
   }
 
