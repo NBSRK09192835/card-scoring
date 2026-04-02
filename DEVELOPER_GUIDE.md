@@ -59,22 +59,37 @@
 - `outputDirectory`: `dist`
 
 ## 9) UI component behavior
+### Shared card style (all auth + home pages)
+- wrapper uses `display: flex`, `align-items: center`, `justify-content: center`, `min-height: 100vh`
+- card width: `min(460px, 90vw)` + `max-width: 90vw`
+- card height: `min-height: 320px`, `max-height: 90vh`
+- overflow: `auto` so long forms can scroll inside card
+- page-wrapper alignment: title on top plus 1.2rem gap to content
+- form fields and buttons use `gap` and `margin` spacing for readability
+
 ### Home component
 - route: `/home`
-- card center, 460px max width, login/signup/guest actions
+- welcome title is card heading
+- 3 actions: Login, Signup, Enter as Guest
 
 ### Login component
-- form controls: `username`, `password`
+- route: `/login`
+- title: `Please login`
+- fields: `username`, `password`
 - on submit: `AuthService.login()`
-- navigate to `/home` or username route
+- after login: navigate to `/home` or `/<username>` if flow includes player setup
 
 ### Signup component
-- form controls: `username`, `email`, `password`, `confirmPassword`
-- password matching, localStorage user store
+- route: `/signup`
+- title: `Sign Up`
+- fields: `username`, `email`, `password`, `confirmPassword`
+- password confirm validation, localStorage user store
 
 ### Guest component
-- optional guest username
-- `AuthService.startGuest()` uses sessionStorage
+- route: `/guest`
+- title: `Guest Login`
+- field: optional `username` for guest session
+- on submit: `AuthService.startGuest()` persists in sessionStorage
 
 ## 10) Testing and lint
 - `npm test`

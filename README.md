@@ -33,10 +33,13 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 - base `/` and wildcard `/**` route to `/home`
 - `/home` welcome screen
 - `/login`, `/signup`, `/guest` pages
-- home card centered (max 460px)
+- shared goal: card centered both horizontally and vertically
 
 ## Styling
 - component styles use SCSS (`*.component.scss`)
+- cards: width `min(460px, 90vw)`, max-width `90vw`
+- cards: min-height `320px`, max-height `90vh`; internal scrolling when needed
+- title + content + actions have clear gap spacing
 
 ## Storage behavior
 - User accounts in localStorage
