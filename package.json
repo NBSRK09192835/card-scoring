@@ -7,6 +7,7 @@
     "build:prod": "rm dist && nx build nbs-card-scoring-frontend --configuration=production",
     "build:staging": "rm dist && nx build nbs-card-scoring-frontend --configuration=staging",
     "build:local": "rm dist && nx build nbs-card-scoring-frontend --configuration=development",
+    "build": "rm dist && nx build nbs-card-scoring-frontend",
     "start": "nx serve nbs-card-scoring-frontend",
     "start:local": "nx serve nbs-card-scoring-frontend --configuration=development",
     "test": "nx test nbs-card-scoring-frontend",
