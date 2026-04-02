@@ -1,10 +1,8 @@
 {
   "npmScope": "nbs-card-scorer",
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    }
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "{workspaceRoot}/package.json"],
+    "production": ["default"]
   },
   "tasksRunnerOptions": {
     "default": {

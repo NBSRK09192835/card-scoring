@@ -3,12 +3,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem;
   background: transparent;
 }
 
 .page-wrapper {
   width: min(460px, 100%);
+  margin-top: 1rem;
   min-height: 560px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
