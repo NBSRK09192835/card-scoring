@@ -69,3 +69,17 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 ## Documentation
 See `DEVELOPER_GUIDE.md` for implementation details and architecture notes.
 
+## New flow: Player setup + scoring
+- login path now redirects to `/<username>` for setup.
+- guest mode now initiates to `/<guestname>` too.
+- setup screen at `/<username>` includes:
+  - welcome message: `Welcome {{username}}`
+  - multi-select player list
+  - add custom player input
+  - loss-per-head radio choices: 10, 20, 50, 100, 200, 300, 500
+  - continue button navigates to `/score`
+- score page at `/score` includes:
+  - `Welcome {{username}}`
+  - sample player score table
+  - `Apply Scores` and `Back to Home` buttons
+

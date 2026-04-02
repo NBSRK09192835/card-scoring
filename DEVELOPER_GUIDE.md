@@ -87,3 +87,16 @@
 - Replace mock auth with backend API + JWT
 - Add real database for users (`POST /api/register`, `POST /api/login`)
 - Encrypt stored credentials and session tokens
+
+## 12) Current scoring feature additions
+- `/login`, `/signup`, `/guest` exist and authenticate via `AuthService`.
+- `/home` base flow remains as current landing page.
+- `/username` route (PlayerSetupComponent) now handles player selection:
+  - `availablePlayers` and multi-select list
+  - custom player input plus add button
+  - `lossPerHead` radio options
+  - continue triggers navigation to `/score`
+- `/score` route (ScoreComponent) shows:
+  - `Welcome {{ username }}` from `AuthService.getActiveUsername()`
+  - basic score table and buttons for apply/back
+
