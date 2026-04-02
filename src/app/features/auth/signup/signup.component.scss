@@ -74,4 +74,19 @@ input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; 
 .login-actions .secondary:hover {
   background: #eef2f9;
 }
-.message { color: #c00; margin-top: 12px; }
+.message {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.message.success {
+  color: #1b5e20;
+  background: #e8f5e9;
+  border: 1px solid #81c784;
+}
+.message.error {
+  color: #b71c1c;
+  background: #ffebee;
+  border: 1px solid #e57373;
+}

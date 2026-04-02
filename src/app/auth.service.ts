@@ -5,15 +5,24 @@ import { StorageService, User, GuestState } from './shared/storage.service';
 export class AuthService {
   constructor(private storage: StorageService) {}
 
-  signup(user: User): { success: boolean; message: string } {
+  signup(user: User): { success: boolean; message: string; code?: 'DUPLICATE' | 'SERVER' | 'UNKNOWN' } {
     const users = this.storage.getUsers();
     if (users.some(u => u.username.toLowerCase() === user.username.toLowerCase())) {
-      return { success: false, message: 'Username already exists' };
+      return { success: false, message: 'Username already exists', code: 'DUPLICATE' };
     }
-    users.push(user);
-    this.storage.saveUsers(users);
-    this.storage.setCurrentUser(user);
-    return { success: true, message: 'Signup successful' };
+
+    try {
+      users.push(user);
+      this.storage.saveUsers(users);
+      this.storage.setCurrentUser(user);
+      return { success: true, message: 'Signup successful' };
+    } catch (error) {
+      if (error instanceof DOMException || error instanceof Error) {
+        // treat localStorage write issues as server/db unresponsive analogs
+        return { success: false, message: 'Server Unresponsive', code: 'SERVER' };
+      }
+      return { success: false, message: 'Please try later', code: 'UNKNOWN' };
+    }
   }
 
   login(username: string, password: string): { success: boolean; message: string; user?: User } {

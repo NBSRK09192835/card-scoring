@@ -10,7 +10,8 @@ import { AuthService } from '../../../auth.service';
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  message = '';
+  bannerMessage = '';
+  bannerType: 'success' | 'error' | '' = '';
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.signupForm = this.fb.group({
@@ -23,16 +24,26 @@ export class SignupComponent {
   }
 
   doSignup(): void {
+    this.bannerMessage = '';
+    this.bannerType = '';
+
     if (this.signupForm.invalid) {
-      this.message = 'Please fill all required fields correctly.';
+      this.setError('Please fill all required fields correctly.');
       return;
     }
 
     const data = this.signupForm.value;
+
     if (data.password !== data.confirmPassword) {
-      this.message = 'Passwords do not match.';
+      this.setError('Passwords do not match.');
       return;
     }
+
+    console.log('Signup data:', {
+      username: data.username,
+      name: data.name,
+      email: data.email
+    });
 
     const result = this.auth.signup({
       username: data.username,
@@ -41,9 +52,25 @@ export class SignupComponent {
       email: data.email
     });
 
-    this.message = result.message;
     if (result.success) {
-      this.router.navigate(['/home']);
+      this.bannerType = 'success';
+      this.bannerMessage = `${data.username} signed up successfully.`;
+      setTimeout(() => this.router.navigate(['/home']), 5000);
+      return;
+    }
+
+    if (result.code === 'SERVER') {
+      this.setError('Server Unresponsive');
+    } else if (result.code === 'UNKNOWN') {
+      this.setError('Please try later');
+    } else {
+      this.setError(result.message || 'Please try later');
     }
   }
+
+  private setError(text: string): void {
+    this.bannerType = 'error';
+    this.bannerMessage = text;
+  }
 }
+
