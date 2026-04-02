@@ -11,6 +11,7 @@ import { AuthService } from '../../auth.service';
 export class GuestComponent {
   guestForm: FormGroup;
   message = '';
+  messageType: 'success' | 'error' | '' = '';
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.guestForm = this.fb.group({
@@ -19,8 +20,16 @@ export class GuestComponent {
   }
 
   startGuest(): void {
+    if (this.guestForm.invalid) {
+      this.guestForm.markAllAsTouched();
+      this.messageType = 'error';
+      this.message = 'Validation failed: please enter a valid guest name.';
+      return;
+    }
+
     const username = this.guestForm.get('username')?.value;
     const state = this.auth.startGuest(username);
+    this.messageType = 'success';
     this.message = `Guest session started as ${state.username}`;
     setTimeout(() => this.router.navigate([`/${encodeURIComponent(state.username)}`]), 5000);
   }

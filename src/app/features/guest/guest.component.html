@@ -1,5 +1,8 @@
 <div class="page-shell">
   <div class="page-wrapper">
+    <div class="message-container guest-message" *ngIf="message">
+      <p class="message-text" [ngClass]="{ 'success': messageType === 'success', 'error': messageType !== 'success' }">{{ message }}</p>
+    </div>
     <h2>Guest Login</h2>
 
   <form [formGroup]="guestForm" (ngSubmit)="startGuest()" class="form">
@@ -14,7 +17,6 @@
     </div>
   </form>
 
-  <p class="message" *ngIf="message">{{ message }}</p>
   <p><a routerLink="/home">Back to Home</a></p>
   </div>
 </div>

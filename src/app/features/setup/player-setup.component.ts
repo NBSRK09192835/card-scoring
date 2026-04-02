@@ -60,4 +60,8 @@ export class PlayerSetupComponent implements OnInit {
     // Persist selection if needed (future), then navigate.
     this.router.navigate(['/score']);
   }
+
+  backToHome(): void {
+    this.router.navigate(['/home']);
+  }
 }
