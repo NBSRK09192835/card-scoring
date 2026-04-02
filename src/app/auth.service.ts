@@ -50,7 +50,23 @@ export class AuthService {
       startedAt: new Date().toISOString()
     };
     this.storage.setGuestSession(state);
+    // Keep a lightweight current user for welcome display
+    this.storage.setCurrentUser({
+      username: state.username,
+      password: '',
+      name: state.username,
+      email: ''
+    });
     return state;
+  }
+
+  getActiveUsername(): string {
+    const currentUser = this.storage.getCurrentUser();
+    if (currentUser && currentUser.username) {
+      return currentUser.username;
+    }
+    const guest = this.storage.getGuestSession();
+    return guest?.username || 'Guest';
   }
 
   saveGuestToLocal(): void {

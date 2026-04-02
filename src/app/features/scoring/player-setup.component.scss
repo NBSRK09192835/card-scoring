@@ -1,0 +1,61 @@
+.page-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.page-wrapper {
+  width: min(500px, 100%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field-row {
+  display: grid;
+  gap: 8px;
+}
+
+input,
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.add-player-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+.loss-fieldset {
+  border: 1px solid #d5dce8;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.radio-row {
+  margin: 4px 0;
+}
+
+.continue {
+  display: block;
+  margin: 0 auto;
+  width: min(240px, 100%);
+}
+
+.validation {
+  color: #b71c1c;
+  font-size: 0.87rem;
+}

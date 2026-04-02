@@ -1,0 +1,35 @@
+<div class="page-shell">
+  <div class="page-wrapper">
+    <h2>Welcome {{ username }}</h2>
+    <p>Please enter/select player names:</p>
+
+    <form [formGroup]="setupForm" (ngSubmit)="continue()" class="form">
+      <div class="field-row">
+        <label for="players">Player list (multi-select):</label>
+        <select id="players" formControlName="selectedPlayers" multiple>
+          <option *ngFor="let p of availablePlayers" [value]="p">{{ p }}</option>
+        </select>
+        <div class="validation" *ngIf="setupForm.get('selectedPlayers')?.touched && setupForm.get('selectedPlayers')?.invalid">
+          Please select at least one player.
+        </div>
+      </div>
+
+      <div class="field-row add-player-row">
+        <input type="text" formControlName="customPlayer" placeholder="New player name" />
+        <button type="button" class="secondary" (click)="addCustomPlayer()">Add Player</button>
+      </div>
+
+      <fieldset class="loss-fieldset">
+        <legend>Please select loss per head:</legend>
+        <div class="radio-row" *ngFor="let value of [10, 20, 50, 100, 200, 300, 500]">
+          <label>
+            <input type="radio" [value]="value" formControlName="lossPerHead" />
+            {{ value }}
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="primary continue">Continue</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+.page-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.page-wrapper {
+  width: min(650px, 100%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.primary {
+  padding: 10px 16px;
+  border: none;
+  background: #2c3e50;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.secondary {
+  padding: 10px 16px;
+  border: 1px solid #2c3e50;
+  background: #f5f7fb;
+  color: #2c3e50;
+  border-radius: 6px;
+  font-weight: bold;
+}

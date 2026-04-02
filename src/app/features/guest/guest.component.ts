@@ -20,8 +20,8 @@ export class GuestComponent {
 
   startGuest(): void {
     const username = this.guestForm.get('username')?.value;
-    this.auth.startGuest(username);
-    this.message = `Guest session started${username ? ' as ' + username : ''}`;
-    setTimeout(() => this.router.navigate(['/home']), 600);
+    const state = this.auth.startGuest(username);
+    this.message = `Guest session started as ${state.username}`;
+    setTimeout(() => this.router.navigate([`/${encodeURIComponent(state.username)}`]), 5000);
   }
 }

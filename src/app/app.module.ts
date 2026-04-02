@@ -7,6 +7,8 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { GuestComponent } from './features/guest/guest.component';
+import { PlayerSetupComponent } from './features/scoring/player-setup.component';
+import { ScoreComponent } from './features/scoring/score.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,12 +16,13 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'guest', component: GuestComponent },
-  // { path: 'scoring', component: ScoringComponent },
+  { path: 'score', component: ScoreComponent },
+  { path: ':username', component: PlayerSetupComponent },
   { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, SignupComponent, GuestComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, SignupComponent, GuestComponent, PlayerSetupComponent, ScoreComponent],
   imports: [BrowserModule, ReactiveFormsModule, FormsModule, RouterModule.forRoot(routes)],
   providers: [],
   bootstrap: [AppComponent]

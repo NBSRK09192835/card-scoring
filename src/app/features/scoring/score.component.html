@@ -1,0 +1,26 @@
+<div class="page-shell">
+  <div class="page-wrapper">
+    <h2>Welcome {{ username }}</h2>
+    <p>The score board is ready for your players.</p>
+
+    <table class="score-table">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players">
+          <td>{{ player.name }}</td>
+          <td>{{ player.score }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="button-row">
+      <button class="primary" (click)="applyScores()">Apply Scores</button>
+      <button class="secondary" (click)="backToHome()">Back to Home</button>
+    </div>
+  </div>
+</div>
