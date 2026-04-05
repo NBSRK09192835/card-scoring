@@ -8,9 +8,13 @@ export interface User {
   phone?: string;
 }
 
+export interface Progress {
+  startedAt: string;
+}
+
 export interface GuestState {
   username: string;
-  progress: any;
+  progress: Progress;
   startedAt: string;
 }
 
