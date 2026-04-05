@@ -48,9 +48,12 @@
     <button type="button" class="secondary" (click)="addCustomPlayer()">Add</button>
   </div>
 
-  <div class="selected-grid" *ngIf="selectedPlayers.length">
+  <div class="selected-grid">
     <div class="grid-title">Selected players</div>
-    <div class="grid-items">
+    <div class="grid-empty" *ngIf="selectedPlayers.length < 2">
+      Please select atleast two players
+    </div>
+    <div class="grid-items" *ngIf="selectedPlayers.length > 0">
       <div class="grid-item" *ngFor="let player of selectedPlayers">
         <label>
           <input type="checkbox" [checked]="true" (change)="removePlayer(player)" />
@@ -61,19 +64,28 @@
   </div>
 
   <div class="field-row">
-    <label for="lossSelect" class="loss-label">Please select lose per head:</label>
-    <select id="lossSelect" formControlName="lossPerHead">
-      <option *ngFor="let value of [10, 20, 50, 100, 200, 300, 500]" [value]="value">
-        {{ value }}
-      </option>
-    </select>
+    <label class="loss-label">Please select lose per head:</label>
+    <div class="custom-dropdown single">
+      <button type="button" class="dropdown-trigger small" (click)="toggleLossDropdown()">
+        <span class="trigger-text">{{ setupForm.get('lossPerHead')?.value }}</span>
+      </button>
+
+      <div class="dropdown-panel" *ngIf="lossDropdownOpen">
+        <div class="dropdown-option" *ngFor="let value of lossOptions">
+          <label class="checkbox-label single-select" (click)="selectLossOption(value)">
+            <input type="radio" [checked]="setupForm.get('lossPerHead')?.value === value" />
+            <span>{{ value }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 
 </form>
 
 <div class="login-actions">
   <button type="button" class="secondary" (click)="backToHome()">Back</button>
-  <button type="button" class="primary continue" (click)="continue()">Continue</button>
+  <button type="button" class="primary continue" (click)="continue()" [disabled]="selectedPlayers.length < 2">Continue</button>
 </div>
 
 <div class="modal-backdrop" *ngIf="showEditUsernameDialog">

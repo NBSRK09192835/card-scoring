@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .page-wrapper {
@@ -88,7 +88,19 @@ app-player-setup {
   min-width: 180px;
   display: inline-block;
   flex: 1;
-  max-width: 400px;
+  max-width: 280px;
+}
+
+.custom-dropdown.single {
+  max-width: 200px;
+}
+
+.custom-dropdown.single .dropdown-trigger {
+  min-height: 40px;
+}
+
+.custom-dropdown.single .dropdown-panel {
+  max-height: 260px;
 }
 
 .dropdown-trigger {
@@ -170,6 +182,16 @@ app-player-setup {
   width: 100%;
   user-select: none;
   min-height: 44px;
+}
+
+.checkbox-label.single-select {
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+.checkbox-label.single-select input[type="radio"] {
+  width: 18px;
+  height: 18px;
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -267,6 +289,19 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+}
+
+.selected-grid {
+  min-height: 96px;
+}
+
+.grid-empty {
+  color: #7d7d7d;
+  font-size: 0.95rem;
+  padding: 12px;
+  border: 1px dashed #c2c2c2;
+  border-radius: 8px;
+  background: #faf7ff;
 }
 
 .edit-user {

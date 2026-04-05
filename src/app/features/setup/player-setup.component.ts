@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,13 +18,15 @@ export class PlayerSetupComponent implements OnInit, OnDestroy {
     'Bob',
     'Charlie'
   ];
+  lossOptions = [10, 20, 50, 100, 200, 300, 500];
 
   showEditUsernameDialog = false;
   editUsernameValue = '';
   dropdownOpen = false;
+  lossDropdownOpen = false;
   private selectedPlayersSubscription?: Subscription;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private auth: AuthService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private auth: AuthService, private elementRef: ElementRef) {
     this.setupForm = this.fb.group({
       selectedPlayers: [[], Validators.required],
       customPlayer: [''],
@@ -83,6 +85,24 @@ export class PlayerSetupComponent implements OnInit, OnDestroy {
 
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
+    if (this.dropdownOpen) {
+      this.lossDropdownOpen = false;
+    }
+  }
+
+  toggleLossDropdown(): void {
+    this.lossDropdownOpen = !this.lossDropdownOpen;
+    if (this.lossDropdownOpen) {
+      this.dropdownOpen = false;
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.dropdownOpen = false;
+      this.lossDropdownOpen = false;
+    }
   }
 
   closeDropdown(): void {
@@ -133,6 +153,11 @@ export class PlayerSetupComponent implements OnInit, OnDestroy {
     this.onPlayerSelectionChange(player, false);
   }
 
+  selectLossOption(value: number): void {
+    this.setupForm.get('lossPerHead')?.setValue(value);
+    this.lossDropdownOpen = false;
+  }
+
   openEditUsername(): void {
     this.editUsernameValue = this.username;
     this.showEditUsernameDialog = true;
@@ -155,7 +180,7 @@ export class PlayerSetupComponent implements OnInit, OnDestroy {
   continue(): void {
     const players = this.selectedPlayers;
 
-    if (!players.length) {
+    if (players.length < 2) {
       this.setupForm.get('selectedPlayers')?.setErrors({ required: true });
       this.setupForm.get('selectedPlayers')?.markAsTouched();
       return;

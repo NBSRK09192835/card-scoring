@@ -7,9 +7,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { MatPseudoCheckboxModule } from '@angular/material/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './features/home/home.component';
+import { GuestUsernameDialogComponent } from './features/guest-username/guest-username-dialog.component';
 import { PlayerSetupComponent } from './features/setup/player-setup.component';
 import { ScoreComponent } from './features/scoring/score.component';
 import { GuestComponent } from './features/guest/guest.component';
@@ -23,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PlayerSetupComponent, ScoreComponent, GuestComponent],
+  declarations: [AppComponent, HomeComponent, GuestUsernameDialogComponent, PlayerSetupComponent, ScoreComponent, GuestComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,6 +38,9 @@ const routes: Routes = [
     MatSelectModule,
     MatCheckboxModule,
     MatDividerModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
     MatPseudoCheckboxModule
   ],
   providers: [],
