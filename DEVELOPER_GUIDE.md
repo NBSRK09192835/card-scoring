@@ -31,7 +31,9 @@
 
 ## 3) Storage and auth logic
 - frontend `shared/storage.service.ts` and `auth.service.ts`
-- User state in localStorage, guest session in sessionStorage
+- Guest-only auth flow: `enterAsGuest()` from home
+- Guest state in sessionStorage for current session
+- Optional local persistence via guest save helper
 
 ## 4) Nx targets
 - `project.json`
@@ -70,26 +72,14 @@
 ### Home component
 - route: `/home`
 - welcome title is card heading
-- 3 actions: Login, Signup, Enter as Guest
+- single action: `Enter as Guest`
+- clear stored app data option available
 
-### Login component
-- route: `/login`
-- title: `Please login`
-- fields: `username`, `password`
-- on submit: `AuthService.login()`
-- after login: navigate to `/home` or `/<username>` if flow includes player setup
-
-### Signup component
-- route: `/signup`
-- title: `Sign Up`
-- fields: `username`, `email`, `password`, `confirmPassword`
-- password confirm validation, localStorage user store
-
-### Guest component
-- route: `/guest`
-- title: `Guest Login`
-- field: optional `username` for guest session
-- on submit: `AuthService.startGuest()` persists in sessionStorage
+### Guest entry
+- guest is started directly from the home screen
+- guest state is persisted in sessionStorage and optionally in localStorage
+- player setup continues at `/:username`
+- home screen also supports clearing stored app data
 
 ## 10) Testing and lint
 - `npm test`
@@ -99,19 +89,19 @@
 - `.github/workflows/ci.yml` runs frontend tests and build only
 
 ## 11) Next improvements
-- Replace mock auth with backend API + JWT
-- Add real database for users (`POST /api/register`, `POST /api/login`)
-- Encrypt stored credentials and session tokens
+- Replace mock guest state with a backend session API
+- Add real database for persistent user data
+- Improve local storage cleanup and multi-session guest flows
 
 ## 12) Current scoring feature additions
-- `/login`, `/signup`, `/guest` exist and authenticate via `AuthService`.
-- `/home` base flow remains as current landing page.
-- `/username` route (PlayerSetupComponent) now handles player selection:
-  - `availablePlayers` and multi-select list
+- `/home` is the main entry screen with a single `Enter as Guest` button
+- player setup is available at `/:username`
+  - welcome message: `Welcome {{username}}`
+  - multi-select player list
   - custom player input plus add button
-  - `lossPerHead` radio options
-  - continue triggers navigation to `/score`
-- `/score` route (ScoreComponent) shows:
+  - loss-per-head choices: 10, 20, 50, 100, 200, 300, 500
+  - continue button navigates to `/score`
+- `/score` route shows:
   - `Welcome {{ username }}` from `AuthService.getActiveUsername()`
-  - basic score table and buttons for apply/back
+  - sample score display and back navigation
 

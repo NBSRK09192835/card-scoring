@@ -1,17 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { StorageService } from '../../shared/storage.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+export class HomeComponent {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private storage: StorageService
+  ) {}
 
-  ngOnInit(): void {
-    // preserve guest state while logging out non-guest user
-    this.auth.saveGuestToLocal();
+  enterAsGuest(): void {
+    const state = this.auth.startGuest();
+    this.router.navigate([`/${encodeURIComponent(state.username)}`]);
+  }
+
+  clearStoredData(): void {
+    this.storage.clearAppData();
     this.auth.logout();
   }
 }

@@ -64,4 +64,14 @@ export class StorageService {
     const raw = localStorage.getItem(GUEST_LOCAL_KEY);
     return raw ? JSON.parse(raw) : null;
   }
+
+  clearAppData(): void {
+    localStorage.removeItem(USERS_KEY);
+    localStorage.removeItem(CURRENT_USER_KEY);
+    localStorage.removeItem(GUEST_LOCAL_KEY);
+    localStorage.removeItem('player-setup-username');
+    localStorage.removeItem('player-setup-selected-players');
+    localStorage.removeItem('player-setup-loss-per-head');
+    sessionStorage.removeItem(GUEST_SESSION_KEY);
+  }
 }

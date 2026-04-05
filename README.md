@@ -18,22 +18,22 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 
 ## Overview
 - UI: Angular 18 (Nx 18 workspace)
-- Auth flows: Login, Signup, Guest mode
+- Auth flows: Guest-only entry
 - Storage: localStorage + sessionStorage
 - Testing: Jest (via Nx)
 - Lint: ESLint
 - CI/CD: GitHub Actions; deploy to Vercel
 
 ## User flows
-1. **Login**: username + password (username unique)
-2. **Signup**: username, password, confirm password, email
-3. **Guest Mode**: session-based with optional local-space save
+1. **Enter as Guest**: a single guest entry point from the home screen
+2. **Local storage persistence** for guest state and player setup
+3. **Delete stored data** from the home screen
 
 ## Routing
 - base `/` and wildcard `/**` route to `/home`
-- `/home` welcome screen
-- `/login`, `/signup`, `/guest` pages
-- shared goal: card centered both horizontally and vertically
+- `/home` welcome screen with guest entry
+- `/score` scoring screen
+- `/:username` player setup screen
 
 ## Styling
 - component styles use SCSS (`*.component.scss`)
@@ -42,7 +42,7 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 - title + content + actions have clear gap spacing
 
 ## Storage behavior
-- User accounts in localStorage
+- Guest state and current user state in localStorage
 - Guest session in sessionStorage, optional local persistence
 
 ## Local setup (Nx Angular)
@@ -72,17 +72,10 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 ## Documentation
 See `DEVELOPER_GUIDE.md` for implementation details and architecture notes.
 
-## New flow: Player setup + scoring
-- login path now redirects to `/<username>` for setup.
-- guest mode now initiates to `/<guestname>` too.
-- setup screen at `/<username>` includes:
-  - welcome message: `Welcome {{username}}`
-  - multi-select player list
-  - add custom player input
-  - loss-per-head radio choices: 10, 20, 50, 100, 200, 300, 500
-  - continue button navigates to `/score`
-- score page at `/score` includes:
-  - `Welcome {{username}}`
-  - sample player score table
-  - `Apply Scores` and `Back to Home` buttons
+## New flow: Guest-only entry
+- home screen shows a single `Enter as Guest` button
+- guest state is persisted using localStorage/sessionStorage
+- user can clear stored app data from the home screen
+- player setup screen is available at `/:username`
+- score page remains at `/score`
 

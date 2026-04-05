@@ -7,9 +7,8 @@
     "build:prod": "nx build nbs-card-scoring-frontend --configuration=production",
     "build:staging": "nx build nbs-card-scoring-frontend --configuration=staging",
     "build:local": "nx build nbs-card-scoring-frontend --configuration=development",
-    "build": "rm dist && nx build nbs-card-scoring-frontend",
+    "local": "npm run build:local && nx serve nbs-card-scoring-frontend --configuration=development --open",
     "start": "nx serve nbs-card-scoring-frontend",
-    "start:local": "nx serve nbs-card-scoring-frontend --configuration=development --open",
     "test": "nx test nbs-card-scoring-frontend",
     "lint": "nx run nbs-card-scoring-frontend:lint",
     "format": "nx format:write"
@@ -23,9 +22,8 @@
     "@angular/platform-browser": "~18.0.0",
     "@angular/platform-browser-dynamic": "~18.0.0",
     "@angular/router": "~18.0.0",
-    "@carbon/styles": "^1.103.0",
-    "carbon-components": "^10.59.2",
-    "carbon-components-angular": "^5.65.0",
+    "@angular/cdk": "~18.0.0",
+    "@angular/material": "~18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.0",
     "zone.js": "^0.14.10"

@@ -8,44 +8,189 @@
 
 .page-wrapper {
   width: min(500px, 100%);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+app-player-setup {
+  display: contents;
+}
+
+:host {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  grid-template-columns: min(500px, 100%);
+  gap: 16px;
 }
 
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.header-row h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #213a63;
+  font-weight: 700;
+  flex: 1;
+}
+
+.edit-user {
+  border: 1px solid #2c3e50;
+  background: #fff;
+  color: #2c3e50;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.player-setup-form {
+  display: grid;
+  gap: 16px;
+  width: 100%;
 }
 
 .subtitle {
-  margin: 0 0 8px;
+  margin: 0;
   font-weight: 600;
 }
 
-.multi-select-label {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 8px;
+.player-select-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
 }
 
-.multi-select {
+.player-select-row .subtitle {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: auto;
+  min-width: 180px;
+  display: inline-block;
+  flex: 1;
+  max-width: 400px;
+}
+
+.dropdown-trigger {
+  background: #f5e8ff;
+  border: 1px solid #e0d0ff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  position: relative;
+  user-select: none;
   width: 100%;
-  min-width: 250px;
-  max-width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
 }
 
-.selected-count {
-  font-size: 0.9rem;
-  color: #333;
+.dropdown-trigger:hover {
+  background: #f0d8ff;
+}
+
+.dropdown-trigger::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #333;
+}
+
+.trigger-text {
+  color: #999;
+  font-weight: 500;
+  flex: 1;
+}
+
+.trigger-text.selected {
+  color: #212121;
+  font-weight: 600;
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #f5e8ff;
+  border: 1px solid #e0d0ff;
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 10;
+  min-width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-option {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.dropdown-option.select-all-option {
+  padding: 0;
+  min-height: 44px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  width: 100%;
+  user-select: none;
+  min-height: 44px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.checkbox-label span {
+  font-size: 0.95rem;
+  flex: 1;
+  font-weight: 500;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 4px 0;
 }
 
 .field-row,
@@ -53,7 +198,7 @@
 .selected-grid,
 .loss-label,
 .loss-dropdown {
-  margin-top: 12px;
+  margin-top: 0;
 }
 
 .add-player-row {
@@ -91,9 +236,24 @@
 }
 
 .grid-item label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.grid-item input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  vertical-align: baseline;
+}
+
+.selected-grid input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  vertical-align: baseline;
 }
 
 .loss-label {
@@ -151,7 +311,8 @@ select {
   display: flex;
   justify-content: space-between;
   gap: 0.8rem;
-  margin-top: 0.8rem;
+  margin-top: 0;
+  width: 100%;
 }
 
 .login-actions .primary,

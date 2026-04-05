@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-player-setup',
   templateUrl: './player-setup.component.html',
-  styleUrls: ['./player-setup.component.scss']
+  styleUrls: ['./player-setup.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class PlayerSetupComponent implements OnInit {
+export class PlayerSetupComponent implements OnInit, OnDestroy {
   username = '';
   setupForm: FormGroup;
   availablePlayers = [
@@ -19,6 +21,8 @@ export class PlayerSetupComponent implements OnInit {
 
   showEditUsernameDialog = false;
   editUsernameValue = '';
+  dropdownOpen = false;
+  private selectedPlayersSubscription?: Subscription;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.setupForm = this.fb.group({
@@ -54,25 +58,46 @@ export class PlayerSetupComponent implements OnInit {
     if (storedLoss) {
       this.setupForm.get('lossPerHead')?.setValue(Number(storedLoss));
     }
+
+    this.selectedPlayersSubscription = this.setupForm.get('selectedPlayers')?.valueChanges.subscribe(value => {
+      const selected = Array.isArray(value) ? value.filter(Boolean) as string[] : [];
+      const sorted = [...new Set(selected)].sort((a, b) => a.localeCompare(b));
+      if (JSON.stringify(sorted) !== JSON.stringify(selected)) {
+        this.setupForm.get('selectedPlayers')?.setValue(sorted, { emitEvent: false });
+      }
+      localStorage.setItem('player-setup-selected-players', JSON.stringify(sorted));
+    });
   }
 
   get selectedPlayers(): string[] {
     return this.setupForm.get('selectedPlayers')?.value || [];
   }
 
-  onPlayerMultiSelectChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const values = Array.from(target.selectedOptions).map(opt => opt.value);
-    const updated = values.sort((a, b) => a.localeCompare(b));
-    this.setupForm.get('selectedPlayers')?.setValue(updated);
-    localStorage.setItem('player-setup-selected-players', JSON.stringify(updated));
+  get isAllSelected(): boolean {
+    return this.availablePlayers.length > 0 && this.selectedPlayers.length === this.availablePlayers.length;
   }
 
-  get dropdownSize(): number {
-    return Math.min(this.availablePlayers.length, 7);
+  get isPartiallySelected(): boolean {
+    return this.selectedPlayers.length > 0 && this.selectedPlayers.length < this.availablePlayers.length;
   }
 
-  setPlayerSelection(player: string, checked: boolean): void {
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpen = false;
+  }
+
+  onSelectAllChange(checked: boolean): void {
+    if (checked) {
+      this.setSelectedPlayers(this.availablePlayers);
+    } else {
+      this.setSelectedPlayers([]);
+    }
+  }
+
+  onPlayerSelectionChange(player: string, checked: boolean): void {
     const selected = new Set(this.selectedPlayers);
     if (checked) {
       selected.add(player);
@@ -81,6 +106,11 @@ export class PlayerSetupComponent implements OnInit {
     }
 
     const updated = Array.from(selected).sort((a, b) => a.localeCompare(b));
+    this.setSelectedPlayers(updated);
+  }
+
+  private setSelectedPlayers(players: string[]): void {
+    const updated = [...new Set(players)].sort((a, b) => a.localeCompare(b));
     this.setupForm.get('selectedPlayers')?.setValue(updated);
     localStorage.setItem('player-setup-selected-players', JSON.stringify(updated));
   }
@@ -95,12 +125,12 @@ export class PlayerSetupComponent implements OnInit {
       this.availablePlayers = [...this.availablePlayers, custom].sort((a, b) => a.localeCompare(b));
     }
 
-    this.setPlayerSelection(custom, true);
+    this.onPlayerSelectionChange(custom, true);
     this.setupForm.get('customPlayer')?.setValue('');
   }
 
   removePlayer(player: string): void {
-    this.setPlayerSelection(player, false);
+    this.onPlayerSelectionChange(player, false);
   }
 
   openEditUsername(): void {
@@ -153,5 +183,9 @@ export class PlayerSetupComponent implements OnInit {
   backToHome(): void {
     localStorage.setItem('player-setup-username', this.username);
     this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.selectedPlayersSubscription?.unsubscribe();
   }
 }

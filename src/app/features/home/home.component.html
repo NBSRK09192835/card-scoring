@@ -8,12 +8,8 @@
     </div>
 
     <div class="home-actions">
-      <a routerLink="/login" class="home-link">Login</a>
-      <a routerLink="/signup" class="home-link">Signup</a>
-    </div>
-
-    <div class="home-guest-link">
-      <a routerLink="/guest" class="home-guest-anchor">Enter as Guest</a>
+      <button type="button" class="home-link" (click)="enterAsGuest()">Enter as Guest</button>
+      <button type="button" class="home-clear-button" (click)="clearStoredData()">Clear stored data</button>
     </div>
   </div>
 </div>

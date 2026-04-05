@@ -14,8 +14,7 @@
         "tsConfig": "tsconfig.app.json",
         "assets": ["src/favicon.ico", "src/assets"],
         "styles": [
-          "src/styles.css",
-          "node_modules/carbon-components/css/carbon-components.min.css"
+          "src/styles.css"
         ],
         "scripts": []
       },
