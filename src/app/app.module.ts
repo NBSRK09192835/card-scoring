@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './features/home/home.component';
 import { PlayerSetupComponent } from './features/setup/player-setup.component';
 import { ScoreComponent } from './features/scoring/score.component';
+import { GuestComponent } from './features/guest/guest.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PlayerSetupComponent, ScoreComponent],
+  declarations: [AppComponent, HomeComponent, PlayerSetupComponent, ScoreComponent, GuestComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

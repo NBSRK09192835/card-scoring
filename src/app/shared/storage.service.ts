@@ -18,22 +18,12 @@ export interface GuestState {
   startedAt: string;
 }
 
-const USERS_KEY = 'nbs-card-scoring-users';
 const CURRENT_USER_KEY = 'nbs-card-scoring-current-user';
 const GUEST_SESSION_KEY = 'nbs-card-scoring-guest-session';
 const GUEST_LOCAL_KEY = 'nbs-card-scoring-guest-local';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
-  getUsers(): User[] {
-    const raw = localStorage.getItem(USERS_KEY);
-    return raw ? JSON.parse(raw) : [];
-  }
-
-  saveUsers(users: User[]): void {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-
   setCurrentUser(user: User | null): void {
     if (user) {
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
@@ -70,7 +60,6 @@ export class StorageService {
   }
 
   clearAppData(): void {
-    localStorage.removeItem(USERS_KEY);
     localStorage.removeItem(CURRENT_USER_KEY);
     localStorage.removeItem(GUEST_LOCAL_KEY);
     localStorage.removeItem('player-setup-username');
