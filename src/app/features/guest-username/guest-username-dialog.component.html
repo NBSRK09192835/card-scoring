@@ -1,6 +1,6 @@
 <h2>Enter Guest Username</h2>
 <form [formGroup]="usernameForm" class="dialog-form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill" class="username-field">
+  <mat-form-field appearance="outline" class="username-field">
     <mat-label>Username</mat-label>
     <input matInput formControlName="username" autocomplete="off" />
     <mat-error *ngIf="usernameForm.get('username')?.hasError('required')">
@@ -12,7 +12,7 @@
   </mat-form-field>
 
   <div class="dialog-actions">
-    <button type="button" mat-button class="secondary" (click)="onCancel()">Cancel</button>
+    <button mat-button class="btn-secondary" (click)="onCancel()">Cancel</button>
     <button type="submit" mat-raised-button color="primary" [disabled]="usernameForm.invalid">Continue</button>
   </div>
 </form>

@@ -21,7 +21,8 @@ export class HomeComponent {
   enterAsGuest(): void {
     const dialogRef = this.dialog.open(GuestUsernameDialogComponent, {
       width: '420px',
-      disableClose: true
+      disableClose: true,
+      panelClass: 'app-dialog'
     });
 
     dialogRef.afterClosed().subscribe((username: string | undefined) => {

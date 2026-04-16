@@ -1,0 +1,162 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* =========================
+   DESIGN TOKENS
+   ========================= */
+
+:root {
+  --brand-primary: #213a63;
+  --brand-secondary: #3f51b5;
+
+  --surface-bg: #ffffff;
+  --surface-muted: #f5f7fb;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #666;
+
+  --border-color: #dcdfe3;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   BASE
+   ========================= */
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f7f8fa;
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 480px;
+  margin: 2rem auto;
+  background: var(--surface-bg);
+  box-shadow: var(--shadow-sm);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+/* =========================
+   INPUT SYSTEM (FIXED)
+   ========================= */
+
+/* Form field spacing */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Rounded outline */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: 8px;
+}
+
+/* Fix input padding */
+.mat-mdc-form-field-infix {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+/* Label styling */
+.mat-mdc-floating-label {
+  color: var(--brand-primary) !important;
+  font-weight: 500;
+}
+
+/* Focus border */
+.mat-mdc-form-field.mat-focused .mdc-notched-outline {
+  border-color: var(--brand-primary) !important;
+  border-width: 2px;
+}
+
+/* Hover border */
+.mat-mdc-form-field:hover .mdc-notched-outline {
+  border-color: #5a6f91;
+}
+
+/* Error message spacing */
+.mat-mdc-form-field-subscript-wrapper {
+  margin-top: 4px;
+}
+
+/* =========================
+   BUTTON SYSTEM
+   ========================= */
+
+/* Primary button */
+.mat-mdc-raised-button.mat-primary {
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+/* Secondary button */
+.btn-secondary {
+  border: 1px solid var(--brand-primary);
+  background: var(--surface-muted);
+  color: var(--brand-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+}
+
+.btn-secondary:hover {
+  background: var(--brand-primary);
+  color: #fff;
+}
+
+/* =========================
+   DIALOG SYSTEM
+   ========================= */
+
+.app-dialog .mat-mdc-dialog-container {
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  background: var(--surface-bg);
+}
+
+.app-dialog h2 {
+  margin: 0 0 1rem;
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.dialog-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* =========================
+   UTILITY
+   ========================= */
+
+.controls {
+  margin-bottom: 1.2rem;
+}
+
+.controls button {
+  margin-right: 0.75rem;
+}
+
+.message {
+  margin: 1rem 0;
+  color: #1b4f72;
+}
+
+.note {
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
