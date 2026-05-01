@@ -1,0 +1,93 @@
+<div #scorecard class="scorecard-wrapper">
+
+  <button class="primary" (click)="exportAsImage()">Export</button>
+  <button class="primary" (click)="shareScore()">Share</button>
+
+  <div class="page-container">
+
+    <!-- HEADER -->
+    <h2 class="title">
+      {{ username }} - Scorecard - {{ today }}
+    </h2>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+
+      <!-- LOSS -->
+      <div class="field-group inline">
+        <label>Lose per head:</label>
+        <select [(ngModel)]="lossPerHead" class="loss-select">
+          <option [ngValue]="null">Select</option>
+          <option *ngFor="let val of lossOptions" [ngValue]="val">
+            {{ val }}
+          </option>
+        </select>
+      </div>
+
+      <!-- ADD PLAYER -->
+      <button class="primary" (click)="addPlayer()">Add Player</button>
+
+      <!-- ADD ROUND -->
+      <button class="primary" [disabled]="!lossPerHead || activePlayers.length < 2" (click)="addRound()">
+        Add Round
+      </button>
+
+    </div>
+
+    <!-- PLAYER TOGGLES -->
+    <div class="players">
+      <label class="player-toggle" *ngFor="let p of players">
+        <input type="checkbox" [checked]="p.active" (change)="togglePlayer(p)">
+        <span>{{ p.name }}</span>
+      </label>
+    </div>
+
+    <!-- EMPTY -->
+    <div *ngIf="rounds.length === 0" class="empty">
+      No rounds yet. Add your first round.
+    </div>
+
+    <!-- TABLE -->
+    <table *ngIf="rounds.length > 0">
+
+      <thead>
+        <tr>
+          <th>Round</th>
+          <th>Winner</th>
+          <th *ngFor="let p of players">{{ p.name }}</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let r of rounds; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ r.winner }}</td>
+
+          <td *ngFor="let p of players" [ngClass]="getValueClass(r.results[p.name])">
+            {{ r.results[p.name] }}
+          </td>
+
+          <td>
+            <button (click)="editRound(i)">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- TOTAL -->
+      <tfoot>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td></td>
+          <td *ngFor="let p of players">
+            <strong>{{ totals[p.name] }}</strong>
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
+
+    </table>
+
+  </div>
+
+</div>

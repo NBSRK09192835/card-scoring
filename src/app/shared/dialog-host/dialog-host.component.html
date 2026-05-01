@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<div mat-dialog-content>
+  <p>{{ data.message }}</p>
+
+  <ng-container *ngIf="data.type === 'prompt'">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ data.inputLabel || 'Enter value' }}</mat-label>
+
+      <ng-container *ngIf="data.options?.length; else textInput">
+        <mat-select [(ngModel)]="value">
+          <mat-option *ngFor="let option of data.options" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </ng-container>
+
+      <ng-template #textInput>
+        <input matInput [(ngModel)]="value" [placeholder]="data.placeholder" />
+      </ng-template>
+    </mat-form-field>
+  </ng-container>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">{{ data.cancelLabel || 'Cancel' }}</button>
+  <button mat-raised-button color="primary" [disabled]="data.type === 'prompt' && !value?.trim()" (click)="confirm()">
+    {{ data.confirmLabel || 'OK' }}
+  </button>
+</div>

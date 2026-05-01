@@ -1,100 +1,59 @@
-<div class="header-row">
-  <h2>Welcome to our guest "{{ username }}"</h2>
-  <button type="button" class="edit-user" (click)="openEditUsername()">Edit</button>
-</div>
+<div class="page-shell">
+  <div class="page-wrapper">
 
-<form [formGroup]="setupForm" class="player-setup-form">
-  <div class="player-select-row">
-    <p class="subtitle">Please select players from dropdown here:</p>
-    <div class="custom-dropdown">
-      <div class="dropdown-trigger" (click)="toggleDropdown()">
-        <span class="trigger-text" *ngIf="selectedPlayers.length === 0; else selectedCount">
-          Select one
-        </span>
-        <ng-template #selectedCount>
-          <span class="trigger-text selected">{{ selectedPlayers.length }} item(s) selected</span>
-        </ng-template>
-      </div>
-      
-      <div class="dropdown-panel" *ngIf="dropdownOpen">
-        <div class="dropdown-option select-all-option">
-          <label class="checkbox-label">
-            <input 
-              type="checkbox"
-              [checked]="isAllSelected"
-              [indeterminate]="isPartiallySelected"
-              (change)="onSelectAllChange($event.target?.checked || false)" />
-            <span>Select all options</span>
-          </label>
-        </div>
-        
-        <div class="dropdown-divider"></div>
-        
-        <div class="dropdown-option" *ngFor="let player of availablePlayers">
-          <label class="checkbox-label">
-            <input 
-              type="checkbox"
-              [checked]="selectedPlayers.includes(player)"
-              (change)="onPlayerSelectionChange(player, $event.target?.checked || false)" />
-            <span>{{ player }}</span>
-          </label>
-        </div>
-      </div>
+    <!-- Title -->
+    <div class="title-row">
+      <h2>Welcome to our guest "{{ username }}"</h2>
+      <button (click)="editUsername()">Edit</button>
     </div>
-  </div>
 
-  <div class="field-row add-player-row">
-    <input type="text" formControlName="customPlayer" placeholder="Enter Player Name" />
-    <button type="button" class="secondary" (click)="addCustomPlayer()">Add</button>
-  </div>
+    <!-- Players -->
+    <div>
+      <label>Please select players:</label>
 
-  <div class="selected-grid">
-    <div class="grid-title">Selected players</div>
-    <div class="grid-empty" *ngIf="selectedPlayers.length < 2">
-      Please select atleast two players
-    </div>
-    <div class="grid-items" *ngIf="selectedPlayers.length > 0">
-      <div class="grid-item" *ngFor="let player of selectedPlayers">
-        <label>
-          <input type="checkbox" [checked]="true" (change)="removePlayer(player)" />
+      <div class="player-list">
+        <label *ngFor="let player of players">
+          <input type="checkbox" [checked]="isSelected(player)" (change)="togglePlayer(player)" />
           {{ player }}
         </label>
       </div>
     </div>
-  </div>
 
-  <div class="field-row">
-    <label class="loss-label">Please select lose per head:</label>
-    <div class="custom-dropdown single">
-      <button type="button" class="dropdown-trigger small" (click)="toggleLossDropdown()">
-        <span class="trigger-text">{{ setupForm.get('lossPerHead')?.value }}</span>
-      </button>
+    <!-- Add player -->
+    <div class="add-player">
+      <input type="text" [(ngModel)]="newPlayer" placeholder="Enter Player Name" />
+      <button (click)="addPlayer()">Add</button>
+    </div>
 
-      <div class="dropdown-panel" *ngIf="lossDropdownOpen">
-        <div class="dropdown-option" *ngFor="let value of lossOptions">
-          <label class="checkbox-label single-select" (click)="selectLossOption(value)">
-            <input type="radio" [checked]="setupForm.get('lossPerHead')?.value === value" />
-            <span>{{ value }}</span>
-          </label>
-        </div>
+    <!-- Selected players -->
+    <div class="selected-box">
+      <strong>Selected players</strong>
+
+      <div *ngIf="selectedPlayers.length === 0" class="placeholder">
+        No players selected
+      </div>
+
+      <div *ngFor="let p of selectedPlayers" class="player-chip">
+        {{ p }}
+        <button class="remove-btn" (click)="removePlayer(p)">X</button>
       </div>
     </div>
-  </div>
 
-</form>
-
-<div class="login-actions">
-  <button type="button" class="secondary" (click)="backToHome()">Back</button>
-  <button type="button" class="primary continue" (click)="continue()" [disabled]="selectedPlayers.length < 2">Continue</button>
-</div>
-
-<div class="modal-backdrop" *ngIf="showEditUsernameDialog">
-  <div class="modal-dialog">
-    <h3>Edit Username</h3>
-    <input type="text" [(ngModel)]="editUsernameValue" />
-    <div class="modal-buttons">
-      <button type="button" class="secondary" (click)="cancelEditUsername()">Cancel</button>
-      <button type="button" class="primary" (click)="saveEditedUsername()">Save</button>
+    <!-- Lose per head -->
+    <div class="lose-row">
+      <label>Please select lose per head:</label>
+      <select [(ngModel)]="losePerHead">
+        <option *ngFor="let val of loseOptions" [value]="val">
+          {{ val }}
+        </option>
+      </select>
     </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="back" (click)="goBack()">Back</button>
+      <button class="continue" (click)="continue()">Continue</button>
+    </div>
+
   </div>
 </div>

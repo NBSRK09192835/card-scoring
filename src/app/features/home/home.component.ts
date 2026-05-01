@@ -1,42 +1,36 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../auth.service';
-import { StorageService } from '../../shared/storage.service';
-import { GuestUsernameDialogComponent } from '../guest-username/guest-username-dialog.component';
+import { SessionFacade } from '../../core/facades/session-facade.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent {
+
   constructor(
-    private auth: AuthService,
     private router: Router,
-    private dialog: MatDialog,
-    private storage: StorageService
-  ) {}
+    private session: SessionFacade
+  ) { }
 
   enterAsGuest(): void {
-    const dialogRef = this.dialog.open(GuestUsernameDialogComponent, {
-      width: '420px',
-      disableClose: true,
-      panelClass: 'app-dialog'
-    });
-
-    dialogRef.afterClosed().subscribe((username: string | undefined) => {
-      if (!username || !username.trim()) {
-        return;
-      }
-
-      const state = this.auth.startGuest(username.trim());
-      this.router.navigate([`/${encodeURIComponent(state.username)}`]);
-    });
+    this.router.navigate(['/guest']);
   }
 
   clearStoredData(): void {
-    this.storage.clearAppData();
-    this.auth.logout();
+    this.session.clearSession();
+  }
+
+  hasActiveSession(): boolean {
+    return !!this.session.getUsername();
+  }
+
+  resumeSession(): void {
+    const username = this.session.getUsername();
+    if (username) {
+      this.router.navigate([`/${encodeURIComponent(username)}`]);
+    }
   }
 }

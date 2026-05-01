@@ -1,42 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth.service';
+import { SessionFacade } from '../../core/facades/session-facade.service';
+import { ToastService } from '../../core/services/toast/toast.service';
 
 @Component({
   selector: 'app-guest',
   templateUrl: './guest.component.html',
   styleUrls: ['./guest.component.scss']
 })
-export class GuestComponent {
+export class GuestComponent implements OnInit {
+
   guestForm: FormGroup;
-  message = '';
-  messageType: 'success' | 'error' | '' = '';
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private session: SessionFacade,
+    private toast: ToastService
+  ) {
     this.guestForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9@#$ ]+$/)]]
+      username: ['', [Validators.required]]
     });
+  }
 
-    // Keep guest username when returning to guest entry
-    const active = this.auth.getActiveUsername();
-    if (active && active !== 'Guest') {
-      this.guestForm.get('username')?.setValue(active);
+  ngOnInit(): void {
+    const existing = this.session.getUsername();
+
+    if (existing && existing !== 'Guest') {
+      this.guestForm.patchValue({ username: existing });
     }
   }
 
-  startGuest(): void {
-    if (this.guestForm.invalid) {
+  startGuest(username?: string): void {
+    const enteredName = (username || this.guestForm.get('username')?.value || '').trim();
+
+    if (!enteredName) {
       this.guestForm.markAllAsTouched();
-      this.messageType = 'error';
-      this.message = 'Validation failed: please enter a valid guest name.';
+      this.toast.show('Please enter a valid guest name.', 'error');
       return;
     }
 
-    const username = this.guestForm.get('username')?.value;
-    const state = this.auth.startGuest(username);
-    this.messageType = 'success';
-    this.message = `Guest session started as ${state.username}`;
-    setTimeout(() => this.router.navigate([`/${encodeURIComponent(state.username)}`]), 5000);
+    const existing = this.session.getUsername();
+
+    if (existing && existing.toLowerCase() === enteredName.toLowerCase()) {
+      this.toast.show(`"${enteredName}" is already active.`, 'error');
+      return;
+    }
+
+    if (existing) {
+      const replace = window.confirm(`Session already exists as "${existing}". Replace it?`);
+      if (!replace) return;
+
+      this.session.clearSession();
+      this.completeGuest(enteredName);
+      return;
+    }
+
+    this.completeGuest(enteredName);
+  }
+
+  private completeGuest(username: string): void {
+    this.session.setUsername(username);
+    this.toast.show(`Guest session started as ${username}`, 'success');
+    this.router.navigate([`/${encodeURIComponent(username)}`]);
   }
 }

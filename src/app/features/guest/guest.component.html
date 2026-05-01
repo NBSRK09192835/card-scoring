@@ -1,22 +1,28 @@
 <div class="page-shell">
   <div class="page-wrapper">
-    <div class="message-container guest-message" *ngIf="message">
-      <p class="message-text" [ngClass]="{ 'success': messageType === 'success', 'error': messageType !== 'success' }">{{ message }}</p>
-    </div>
+
     <h2>Guest Login</h2>
 
-  <form [formGroup]="guestForm" (ngSubmit)="startGuest()" class="form">
-    <div class="field-row">
-      <label>Guest Name</label>
-      <input formControlName="username" placeholder="Enter guest name" />
-    </div>
+    <form [formGroup]="guestForm" (ngSubmit)="startGuest()" class="form">
 
-    <div class="login-actions">
-      <button type="submit" class="primary">Enter as Guest</button>
-      <a routerLink="/home" class="secondary">Back</a>
-    </div>
-  </form>
+      <div class="field-row">
+        <label>Guest Name</label>
+        <input formControlName="username" placeholder="Enter guest name" />
 
-  <p><a routerLink="/home">Back to Home</a></p>
+        <small class="error" *ngIf="guestForm.controls['username'].touched && guestForm.controls['username'].invalid">
+          Please enter a guest name.
+        </small>
+      </div>
+
+      <div class="login-actions">
+        <button type="submit" class="primary">
+          Enter as Guest
+        </button>
+
+        <a routerLink="/home" class="secondary">Back</a>
+      </div>
+
+    </form>
+
   </div>
 </div>

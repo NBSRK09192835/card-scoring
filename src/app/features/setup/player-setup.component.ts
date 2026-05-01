@@ -1,216 +1,124 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../../auth.service';
+import { SessionFacade } from '../../core/facades/session-facade.service';
+import { ToastService } from '../../core/services/toast/toast.service';
 
 @Component({
   selector: 'app-player-setup',
   templateUrl: './player-setup.component.html',
-  styleUrls: ['./player-setup.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./player-setup.component.scss']
 })
-export class PlayerSetupComponent implements OnInit, OnDestroy {
+export class PlayerSetupComponent implements OnInit {
+
   username = '';
-  setupForm: FormGroup;
-  availablePlayers = [
-    'Alice',
-    'Bob',
-    'Charlie'
-  ];
-  lossOptions = [10, 20, 50, 100, 200, 300, 500];
 
-  showEditUsernameDialog = false;
-  editUsernameValue = '';
-  dropdownOpen = false;
-  lossDropdownOpen = false;
-  private selectedPlayersSubscription?: Subscription;
+  players: string[] = [];
+  selectedPlayers: string[] = [];
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private auth: AuthService, private elementRef: ElementRef) {
-    this.setupForm = this.fb.group({
-      selectedPlayers: [[], Validators.required],
-      customPlayer: [''],
-      lossPerHead: [10, Validators.required]
-    });
-  }
+  newPlayer = '';
+
+  loseOptions = [10, 20, 50, 100, 200, 300, 500, 1000];
+  losePerHead = 10;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private toast: ToastService,
+    private session: SessionFacade
+  ) { }
 
   ngOnInit(): void {
-    // Prefer route username then auth service value, then localStorage fallback
     const routeUsername = this.route.snapshot.paramMap.get('username');
-    const activeUsername = this.auth.getActiveUsername();
-    const stored = localStorage.getItem('player-setup-username');
-    this.username = routeUsername || activeUsername || stored || 'Guest';
-    if (this.username) {
-      localStorage.setItem('player-setup-username', this.username);
+    const storedUsername = this.session.getUsername();
+
+    if (routeUsername) {
+      this.username = routeUsername;
+      this.session.setUsername(routeUsername);
+    } else if (storedUsername) {
+      this.username = storedUsername;
     }
 
-    // Persist previously selected players (if coming back to this page)
-    const storedPlayers = localStorage.getItem('player-setup-selected-players');
-    if (storedPlayers) {
-      const parsed = JSON.parse(storedPlayers) as string[];
-      this.setupForm.get('selectedPlayers')?.setValue(parsed);
-      parsed.forEach(name => {
-        if (!this.availablePlayers.includes(name)) {
-          this.availablePlayers.push(name);
-        }
-      });
-    }
+    const storedPlayers = this.session.getPlayers();
 
-    const storedLoss = localStorage.getItem('player-setup-loss-per-head');
-    if (storedLoss) {
-      this.setupForm.get('lossPerHead')?.setValue(Number(storedLoss));
-    }
-
-    this.selectedPlayersSubscription = this.setupForm.get('selectedPlayers')?.valueChanges.subscribe(value => {
-      const selected = Array.isArray(value) ? value.filter(Boolean) as string[] : [];
-      const sorted = [...new Set(selected)].sort((a, b) => a.localeCompare(b));
-      if (JSON.stringify(sorted) !== JSON.stringify(selected)) {
-        this.setupForm.get('selectedPlayers')?.setValue(sorted, { emitEvent: false });
-      }
-      localStorage.setItem('player-setup-selected-players', JSON.stringify(sorted));
-    });
-  }
-
-  get selectedPlayers(): string[] {
-    return this.setupForm.get('selectedPlayers')?.value || [];
-  }
-
-  get isAllSelected(): boolean {
-    return this.availablePlayers.length > 0 && this.selectedPlayers.length === this.availablePlayers.length;
-  }
-
-  get isPartiallySelected(): boolean {
-    return this.selectedPlayers.length > 0 && this.selectedPlayers.length < this.availablePlayers.length;
-  }
-
-  toggleDropdown(): void {
-    this.dropdownOpen = !this.dropdownOpen;
-    if (this.dropdownOpen) {
-      this.lossDropdownOpen = false;
-    }
-  }
-
-  toggleLossDropdown(): void {
-    this.lossDropdownOpen = !this.lossDropdownOpen;
-    if (this.lossDropdownOpen) {
-      this.dropdownOpen = false;
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.dropdownOpen = false;
-      this.lossDropdownOpen = false;
-    }
-  }
-
-  closeDropdown(): void {
-    this.dropdownOpen = false;
-  }
-
-  onSelectAllChange(checked: boolean): void {
-    if (checked) {
-      this.setSelectedPlayers(this.availablePlayers);
+    if (!storedPlayers || storedPlayers.length === 0) {
+      this.players = [
+        'N.B.S.', 'Kiran', 'Deepu', 'Attagaru',
+        'Babai', 'Chohi', 'Swetha', 'Pinni', 'Chaitu'
+      ];
     } else {
-      this.setSelectedPlayers([]);
+      this.players = storedPlayers;
     }
+
+    this.selectedPlayers = [];
   }
 
-  onPlayerSelectionChange(player: string, checked: boolean): void {
-    const selected = new Set(this.selectedPlayers);
-    if (checked) {
-      selected.add(player);
+  togglePlayer(player: string): void {
+    if (this.selectedPlayers.includes(player)) {
+      this.selectedPlayers = this.selectedPlayers.filter(p => p !== player);
     } else {
-      selected.delete(player);
+      this.selectedPlayers.push(player);
     }
-
-    const updated = Array.from(selected).sort((a, b) => a.localeCompare(b));
-    this.setSelectedPlayers(updated);
   }
 
-  private setSelectedPlayers(players: string[]): void {
-    const updated = [...new Set(players)].sort((a, b) => a.localeCompare(b));
-    this.setupForm.get('selectedPlayers')?.setValue(updated);
-    localStorage.setItem('player-setup-selected-players', JSON.stringify(updated));
+  isSelected(player: string): boolean {
+    return this.selectedPlayers.includes(player);
   }
 
-  addCustomPlayer(): void {
-    const custom = (this.setupForm.get('customPlayer')?.value || '').trim();
-    if (!custom) {
+  addPlayer(): void {
+    const name = this.newPlayer.trim();
+
+    if (!name) {
+      this.toast.show('Enter a valid player name', 'error');
       return;
     }
 
-    if (!this.availablePlayers.map(p => p.toLowerCase()).includes(custom.toLowerCase())) {
-      this.availablePlayers = [...this.availablePlayers, custom].sort((a, b) => a.localeCompare(b));
-    }
-
-    this.onPlayerSelectionChange(custom, true);
-    this.setupForm.get('customPlayer')?.setValue('');
-  }
-
-  removePlayer(player: string): void {
-    this.onPlayerSelectionChange(player, false);
-  }
-
-  selectLossOption(value: number): void {
-    this.setupForm.get('lossPerHead')?.setValue(value);
-    this.lossDropdownOpen = false;
-  }
-
-  openEditUsername(): void {
-    this.editUsernameValue = this.username;
-    this.showEditUsernameDialog = true;
-  }
-
-  saveEditedUsername(): void {
-    const edited = (this.editUsernameValue || '').trim();
-    if (!edited) {
-      return;
-    }
-    this.username = edited;
-    localStorage.setItem('player-setup-username', this.username);
-    this.showEditUsernameDialog = false;
-  }
-
-  cancelEditUsername(): void {
-    this.showEditUsernameDialog = false;
-  }
-
-  continue(): void {
-    const players = this.selectedPlayers;
-
-    if (players.length < 2) {
-      this.setupForm.get('selectedPlayers')?.setErrors({ required: true });
-      this.setupForm.get('selectedPlayers')?.markAsTouched();
+    if (this.players.includes(name)) {
+      this.toast.show('Player already exists', 'error');
       return;
     }
 
-    if (this.setupForm.invalid) {
-      this.setupForm.markAllAsTouched();
-      return;
-    }
+    this.players.push(name);
+    this.session.setPlayers(this.players);
 
-    const lossPerHead = this.setupForm.value.lossPerHead;
-    localStorage.setItem('player-setup-loss-per-head', String(lossPerHead));
+    this.selectedPlayers.push(name);
 
-    console.log('Continue configuration:', {
-      username: this.username,
-      selectedPlayers: players,
-      lossPerHead
-    });
+    this.newPlayer = '';
 
-    this.router.navigate(['/score'], {
-      state: { username: this.username, selectedPlayers: players, lossPerHead }
-    });
+    this.toast.show('Player added successfully', 'success');
   }
 
-  backToHome(): void {
-    localStorage.setItem('player-setup-username', this.username);
+  editUsername(): void {
+    const updated = prompt('Enter new username', this.username);
+
+    if (!updated || !updated.trim()) return;
+
+    this.username = updated.trim();
+    this.session.setUsername(this.username);
+
+    this.toast.show('Username updated', 'success');
+  }
+
+  goBack(): void {
+    this.session.clearSession();
     this.router.navigate(['/home']);
   }
 
-  ngOnDestroy(): void {
-    this.selectedPlayersSubscription?.unsubscribe();
+  continue(): void {
+    if (this.selectedPlayers.length < 2) {
+      this.toast.show('Select at least 2 players', 'error');
+      return;
+    }
+
+    this.session.setGameSetup({
+      players: this.selectedPlayers,
+      losePerHead: this.losePerHead,
+      username: this.username
+    });
+
+    this.router.navigate([`/${this.username}/score`]);
+  }
+
+  removePlayer(player: string): void {
+    this.selectedPlayers = this.selectedPlayers.filter(p => p !== player);
   }
 }

@@ -8,8 +8,18 @@
     </div>
 
     <div class="home-actions">
-      <button type="button" class="home-link" (click)="enterAsGuest()">Enter as Guest</button>
-      <button type="button" class="home-clear-button" (click)="clearStoredData()">Clear stored data</button>
+
+      <button *ngIf="hasActiveSession()" type="button" class="home-link" (click)="resumeSession()">
+        Resume Session
+      </button>
+
+      <button type="button" class="home-link" (click)="enterAsGuest()">
+        Enter as Guest
+      </button>
+
+      <button type="button" class="home-clear-button" (click)="clearStoredData()">
+        Clear stored data
+      </button>
     </div>
   </div>
 </div>

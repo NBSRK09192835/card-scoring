@@ -18,5 +18,10 @@
       "sourceRoot": "src",
       "projectType": "application"
     }
+  },
+  "generators": {
+    "@nx/angular:component": {
+      "style": "css"
+    }
   }
 }
