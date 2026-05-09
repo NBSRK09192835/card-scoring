@@ -10,6 +10,13 @@
       {{ username }} - Scorecard - {{ today }}
     </h2>
 
+    <!-- PLAYER STATUS -->
+    <div class="player-status">
+      <span *ngFor="let p of players" class="player-badge" [ngClass]="{ active: p.active, inactive: !p.active }">
+        {{ p.name }}
+      </span>
+    </div>
+
     <!-- CONTROLS -->
     <div class="controls">
 
@@ -54,7 +61,9 @@
         <tr>
           <th>Round</th>
           <th>Winner</th>
-          <th *ngFor="let p of players">{{ p.name }}</th>
+          <th *ngFor="let p of players" [ngClass]="{ 'inactive-player': !p.active }">
+            {{ p.name }}<span *ngIf="!p.active" class="inactive-badge">(Inactive)</span>
+          </th>
           <th>Action</th>
         </tr>
       </thead>
@@ -64,7 +73,7 @@
           <td>{{ i + 1 }}</td>
           <td>{{ r.winner }}</td>
 
-          <td *ngFor="let p of players" [ngClass]="getValueClass(r.results[p.name])">
+          <td *ngFor="let p of players" [ngClass]="[getValueClass(r.results[p.name]), { 'inactive-player': !p.active }]">
             {{ r.results[p.name] }}
           </td>
 
@@ -79,7 +88,7 @@
         <tr>
           <td><strong>Total</strong></td>
           <td></td>
-          <td *ngFor="let p of players">
+          <td *ngFor="let p of players" [ngClass]="{ 'inactive-player': !p.active }">
             <strong>{{ totals[p.name] }}</strong>
           </td>
           <td></td>

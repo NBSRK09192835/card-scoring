@@ -62,7 +62,39 @@ export class GameService {
         }
 
         player.active = active;
+
+        // If deactivating a player, remove them from all rounds and update totals
+        if (!active) {
+            this.updateRoundsForInactivePlayer(name);
+        }
+
         return true;
+    }
+
+    // When a player becomes inactive, remove them from existing rounds
+    // but preserve their previous total
+    private updateRoundsForInactivePlayer(playerName: string): void {
+        this.rounds.forEach(round => {
+            if (round.playersInRound.includes(playerName)) {
+                // Remove player from this round
+                round.playersInRound = round.playersInRound.filter(p => p !== playerName);
+                // Set their result to 0 for this round (but cumulative total is preserved)
+                round.results[playerName] = 0;
+
+                // Recalculate the winner's winnings based on updated player count
+                if (round.playersInRound.includes(round.winner)) {
+                    const newWinAmount = (round.playersInRound.length - 1) * round.lossPerHead;
+                    round.results[round.winner] = newWinAmount;
+
+                    // Recalculate losers' amounts
+                    round.playersInRound.forEach(player => {
+                        if (player !== round.winner && round.results[player] !== 0) {
+                            round.results[player] = -round.lossPerHead;
+                        }
+                    });
+                }
+            }
+        });
     }
 
     // ======================

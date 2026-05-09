@@ -13,6 +13,39 @@
   margin-bottom: 24px;
 }
 
+/* Player Status */
+.player-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.player-badge {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &.active {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+  }
+
+  &.inactive {
+    background: #f3f4f6;
+    color: #999;
+    border: 1px solid #ddd;
+    text-decoration: line-through;
+  }
+}
+
 /* Controls bar */
 .controls {
   display: flex;
@@ -158,6 +191,19 @@ tfoot {
 .loss {
   color: #d93025;
   font-weight: 500;
+}
+
+/* Inactive player styling */
+.inactive-player {
+  opacity: 0.6;
+  background: #f0f0f0 !important;
+}
+
+.inactive-badge {
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
 }
 
 /* Action button */
