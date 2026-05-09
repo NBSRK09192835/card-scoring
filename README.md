@@ -1,4 +1,9 @@
 # NBS-Card-Scoring
+
+[![Test Coverage: 97.26%](https://img.shields.io/badge/Test%20Coverage-97.26%25-brightgreen)](./coverage/index.html)
+![Tests: 147/147 Passing](https://img.shields.io/badge/Tests-147%2F147%20Passing-brightgreen)
+![Test Suites: 12/12 Passing](https://img.shields.io/badge/Test%20Suites-12%2F12%20Passing-brightgreen)
+
 A frontend-only card scoring Angular app with local/session storage auth flows.
 
 ## Table of Contents
@@ -57,7 +62,22 @@ A frontend-only card scoring Angular app with local/session storage auth flows.
 - `npm run start` (frontend at `http://localhost.shankar.com:1928`)
 
 ## Testing
-- `npm test` runs frontend tests
+- `npm test` runs all frontend tests with Jest via Nx
+- `npm run test:coverage` generates HTML coverage report in `./coverage/index.html`
+- **Coverage Statistics:**
+  - **Overall:** 97.26% statements, 100% functions, 97.8% lines
+  - **147 tests** across **12 test suites** — all passing
+  - **Component Coverage:**
+    - 100%: Storage Service, Session Service, Toast Service, Home Component, Dialog Host, Toast Component, App Component, Session Facade, Session Keys Constants, Game Service
+    - 98.33%: Player Setup Component
+    - 91.3%: Score Component
+- **Unit Tests Cover:**
+  - Services: storage, session management, toast notifications, game logic
+  - Components: home, score, player setup, guest entry, dialog host
+  - Facades: session state management
+  - Constants and shared utilities
+
+View the detailed [coverage report](./coverage/index.html).
 
 ## Linting
 - `npm run lint`

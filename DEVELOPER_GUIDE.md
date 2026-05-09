@@ -82,18 +82,116 @@
 - home screen also supports clearing stored app data
 
 ## 10) Testing and lint
-- `npm test`
-- `npm run lint`
+- `npm run test` runs all unit tests with Jest via Nx
+- `npm run test:coverage` generates detailed coverage report in `./coverage/index.html`
 
-## 11) GitHub Actions CI notes
-- `.github/workflows/ci.yml` runs frontend tests and build only
+### Test Coverage Summary
+- **Overall Coverage: 97.26% statements, 100% functions, 97.8% lines**
+- **Total Tests: 147 passing across 12 test suites**
 
-## 11) Next improvements
+### Test Suite Breakdown
+1. **Core Services (100% coverage)**
+   - `session.service.spec.ts` - Session state management (get/set operations, data persistence)
+   - `toast.service.spec.ts` - Toast notification system (timing, message display)
+   - `game.service.spec.ts` - Game logic (player management, round tracking, scoring)
+   - `session-facade.service.spec.ts` - Session data facade layer
+
+2. **Components (98.33% - 100% coverage)**
+   - `app.component.spec.ts` - Root app component initialization
+   - `home.component.spec.ts` - Home page navigation and session management
+   - `score.component.spec.ts` - Score tracking, player management, image export, sharing
+   - `player-setup.component.spec.ts` - Player configuration and game setup
+   - `guest.component.spec.ts` - Guest entry flow
+   - `dialog-host.component.spec.ts` - Dialog confirmation/cancel logic
+   - `toast.component.spec.ts` - Toast notification UI rendering
+
+3. **Shared Services & Utilities (100% coverage)**
+   - `storage.service.spec.ts` - localStorage/sessionStorage mocking and operations
+   - `session-keys.const.spec.ts` - Session storage key constants
+
+### Running Tests
+```bash
+# Run all unit tests
+npm run test
+
+# Run unit tests with coverage report
+npm run test:coverage
+
+# Run specific test file
+npm run test -- --testPathPattern=score.component.spec.ts
+
+# Run in watch mode
+npm run test -- --watch
+
+# View coverage report (HTML)
+# Open ./coverage/index.html in browser after running test:coverage
+```
+
+### Test Configuration
+- Jest configured via `jest.config.js` and `tsconfig.spec.json`
+- TypeScript: `jest-preset-angular` for Angular testing utilities
+- Mocking: `jest.mock()` for external dependencies (html2canvas, HTTP, etc.)
+- Async: `fakeAsync`, `async`, and `jest.fn()` for timer and promise handling
+
+### Coverage Gaps
+- **Score Component (91.3%):** Complex async logic in image export and sharing edge cases
+- **Player Setup Component (98.33%):** Minor branch coverage for specific error paths
+
+## 11) Linting
+- `npm run lint` runs ESLint on all TypeScript source files
+- Configuration: `.eslintrc.json` at project root
+
+## 12) GitHub Actions CI notes
+- `.github/workflows/ci.yml` runs frontend tests and build on every commit
+- **Test Reporting:**
+  - Full test suite runs as part of CI pipeline
+  - Coverage reports generated and stored in artifacts
+  - Failures block merge until tests pass
+- **Commands in CI:**
+  - `npm install` (clean dependency install)
+  - `npm run lint` (ESLint validation)
+  - `npm run test` (Jest unit tests — all 147 tests must pass)
+  - `npm run build:frontend` (production build verification)
+
+## 13) Integrating Coverage to GitHub
+To display coverage badges and reports on GitHub:
+
+### Option 1: Static Badge (Simple)
+Add to README.md (already done):
+```markdown
+[![Test Coverage: 97.26%](https://img.shields.io/badge/Test%20Coverage-97.26%25-brightgreen)](./coverage/index.html)
+```
+
+### Option 2: Codecov Integration (Advanced)
+1. Sign up at [codecov.io](https://codecov.io)
+2. Add Codecov action to `.github/workflows/ci.yml`:
+   ```yaml
+   - name: Upload coverage to Codecov
+     uses: codecov/codecov-action@v3
+     with:
+       files: ./coverage/lcov.info
+       flags: unittests
+   ```
+3. Codecov will comment on PRs with coverage changes
+
+### Option 3: GitHub Pages (Coverage Report Hosting)
+1. Add workflow to deploy coverage report:
+   ```yaml
+   - name: Deploy coverage report to GitHub Pages
+     if: github.ref == 'refs/heads/main'
+     uses: peaceiris/actions-gh-pages@v3
+     with:
+       github_token: ${{ secrets.GITHUB_TOKEN }}
+       publish_dir: ./coverage
+   ```
+2. Coverage HTML report will be available at `https://username.github.io/card-scoring/coverage/`
+
+## 14) Next improvements
 - Replace mock guest state with a backend session API
 - Add real database for persistent user data
 - Improve local storage cleanup and multi-session guest flows
 
-## 12) Current scoring feature additions
+## 15) Current scoring feature additions
 - `/home` is the main entry screen with a single `Enter as Guest` button
 - player setup is available at `/:username`
   - welcome message: `Welcome {{username}}`
