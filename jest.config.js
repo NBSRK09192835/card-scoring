@@ -1,6 +1,6 @@
 module.exports = {
   displayName: 'nbs-card-scoring-frontend',
-  preset: './jest.preset.js',
+  preset: 'jest-preset-angular',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,9 +8,7 @@ module.exports = {
     }
   },
   coverageDirectory: './coverage',
-  transform: {
-    '^.+\\.[tj]s$': 'ts-jest'
-  },
-  moduleFileExtensions: ['ts', 'js', 'html'],
-  transformIgnorePatterns: ['node_modules/(?!.*\.mjs$)']
+  testEnvironment: 'jsdom',
+  moduleFileExtensions: ['ts', 'js', 'html', 'mjs'],
+  transformIgnorePatterns: ['node_modules/(?!(jest-preset-angular|@angular)/)']
 };

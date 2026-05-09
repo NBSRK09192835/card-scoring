@@ -7,23 +7,23 @@ on:
     branches: ['**']
 
 jobs:
-  # unit:
-  #   runs-on: ubuntu-latest
+  unit:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Use Node.js 20
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-  #     - name: Install dependencies
-  #       run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  #     - name: Run unit tests
-  #       run: npm run test
+      - name: Run unit tests
+        run: npm run test
 
   build:
     runs-on: ubuntu-latest
@@ -43,24 +43,24 @@ jobs:
       - name: Build frontend
         run: npm run build:local
 
-  # lint:
-  #   runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Use Node.js 20
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-  #     - name: Install dependencies
-  #       run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  #     - name: Run ESLint
-  #       run: npm run lint
+      - name: Run ESLint
+        run: npm run lint
 
-  #     - name: Optional format check
-  #       run: npm run format -- --check
-  #       continue-on-error: true
+      - name: Optional format check
+        run: npm run format -- --check
+        continue-on-error: true

@@ -2,8 +2,11 @@
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "allowJs": true,
+    "esModuleInterop": true,
     "types": ["jest", "node"]
   },
   "files": ["src/test-setup.ts"],
+  "exclude": ["node_modules", "tmp"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }
