@@ -195,9 +195,8 @@ describe('ScoreComponent', () => {
       const mockCanvas = { toDataURL: jest.fn().mockReturnValue('data:image/png;base64,test') };
       jest.mocked(html2canvas).mockResolvedValue(mockCanvas as any);
 
-      const createElementSpy = jest.spyOn(document, 'createElement');
       const mockLink = { download: '', href: '', click: jest.fn() };
-      createElementSpy.mockReturnValue(mockLink as any);
+      const createElementSpy = jest.spyOn(document, 'createElement').mockImplementation(() => mockLink as any);
 
       await component.exportAsImage();
 
@@ -205,6 +204,8 @@ describe('ScoreComponent', () => {
       expect(mockCanvas.toDataURL).toHaveBeenCalledWith();
       expect(mockLink.download).toBe(`${component.username}-scorecard.png`);
       expect(mockLink.click).toHaveBeenCalled();
+
+      createElementSpy.mockRestore();
     });
   });
 
@@ -286,14 +287,16 @@ describe('ScoreComponent', () => {
       const mockCanvas = { toBlob: jest.fn((callback) => callback(new Blob())) };
       jest.mocked(html2canvas).mockResolvedValue(mockCanvas as any);
       const shareMock = jest.fn().mockResolvedValue(undefined);
+      const canShareMock = jest.fn().mockReturnValue(true);
       Object.defineProperty(globalThis, 'navigator', {
-        value: { ...(globalThis as any).navigator, share: shareMock },
+        value: { ...(globalThis as any).navigator, share: shareMock, canShare: canShareMock },
         configurable: true
       });
 
       await component.shareScore();
 
       expect(html2canvas).toHaveBeenCalledWith(component.scorecard.nativeElement);
+      expect(canShareMock).toHaveBeenCalledWith({ files: expect.any(Array) });
       expect(shareMock).toHaveBeenCalled();
     });
 
