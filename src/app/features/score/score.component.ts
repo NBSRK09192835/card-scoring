@@ -29,6 +29,8 @@ export class ScoreComponent implements OnInit {
     'Babai', 'Chohi', 'Swetha', 'Pinni', 'Chaitu'
   ];
 
+  selectedPlayers: string[] = [];
+
   selectedWinner = '';
 
   @ViewChild('scorecard') scorecard!: ElementRef;

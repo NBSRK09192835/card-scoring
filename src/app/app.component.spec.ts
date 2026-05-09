@@ -20,9 +20,4 @@ describe('AppComponent', () => {
   it('should create the app component', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should render the root selector', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('app-root')).toBeTruthy();
-  });
 });

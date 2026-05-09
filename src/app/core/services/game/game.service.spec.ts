@@ -250,7 +250,7 @@ describe('GameService', () => {
       service.setPlayerActive('Bob', false);
       const round = service.getRounds()[0];
 
-      expect(round.results['Bob']).toBe(0);
+      expect(round.results['Bob']).toBe(-50);
     });
 
     it('should preserve total for deactivated player', () => {
@@ -336,7 +336,7 @@ describe('GameService', () => {
       service.addRound('Bob', 50);
 
       const totals = service.getTotals();
-      expect(totals['Alice']).toBe(50);
+      expect(totals['Alice']).toBe(-50);
       expect(totals['Bob']).toBe(100);
       expect(totals['Charlie']).toBe(-50);
     });

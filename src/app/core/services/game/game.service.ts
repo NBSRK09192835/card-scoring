@@ -78,8 +78,6 @@ export class GameService {
             if (round.playersInRound.includes(playerName)) {
                 // Remove player from this round
                 round.playersInRound = round.playersInRound.filter(p => p !== playerName);
-                // Set their result to 0 for this round (but cumulative total is preserved)
-                round.results[playerName] = 0;
 
                 // Recalculate the winner's winnings based on updated player count
                 if (round.playersInRound.includes(round.winner)) {
@@ -88,10 +86,13 @@ export class GameService {
 
                     // Recalculate losers' amounts
                     round.playersInRound.forEach(player => {
-                        if (player !== round.winner && round.results[player] !== 0) {
+                        if (player !== round.winner) {
                             round.results[player] = -round.lossPerHead;
                         }
                     });
+                } else {
+                    // If winner is deactivated, set their result to 0
+                    round.results[round.winner] = 0;
                 }
             }
         });
@@ -108,7 +109,7 @@ export class GameService {
     addRound(winner: string, lossPerHead: number): boolean {
         const activePlayers = this.getActivePlayers();
 
-        if (activePlayers.length < 2) return false;
+        if (activePlayers.length < 3) return false;
         if (!activePlayers.includes(winner)) return false;
         if (!lossPerHead) return false;
 

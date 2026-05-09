@@ -9,15 +9,15 @@ describe('SessionFacade', () => {
 
   beforeEach(() => {
     const sessionServiceMock = {
-      getUsername: jasmine.createSpy('getUsername'),
-      setUsername: jasmine.createSpy('setUsername'),
-      getPlayers: jasmine.createSpy('getPlayers'),
-      setPlayers: jasmine.createSpy('setPlayers'),
-      getLossPerHead: jasmine.createSpy('getLossPerHead'),
-      setLossPerHead: jasmine.createSpy('setLossPerHead'),
-      getSession: jasmine.createSpy('getSession'),
-      setSession: jasmine.createSpy('setSession'),
-      clearSession: jasmine.createSpy('clearSession')
+      getUsername: jest.fn(),
+      setUsername: jest.fn(),
+      getPlayers: jest.fn(),
+      setPlayers: jest.fn(),
+      getLossPerHead: jest.fn(),
+      setLossPerHead: jest.fn(),
+      getSession: jest.fn(),
+      setSession: jest.fn(),
+      clearSession: jest.fn()
     };
 
     TestBed.configureTestingModule({
@@ -37,7 +37,7 @@ describe('SessionFacade', () => {
 
   describe('Username Management', () => {
     it('should get username from session service', () => {
-      sessionService.getUsername.and.returnValue('TestUser');
+      sessionService.getUsername.mockReturnValue('TestUser');
       const result = service.getUsername();
       expect(result).toBe('TestUser');
       expect(sessionService.getUsername).toHaveBeenCalled();
@@ -52,7 +52,7 @@ describe('SessionFacade', () => {
   describe('Players Management', () => {
     it('should get players from session service', () => {
       const players = ['Player1', 'Player2', 'Player3'];
-      sessionService.getPlayers.and.returnValue(players);
+      sessionService.getPlayers.mockReturnValue(players);
       const result = service.getPlayers();
       expect(result).toEqual(players);
       expect(sessionService.getPlayers).toHaveBeenCalled();
@@ -67,7 +67,7 @@ describe('SessionFacade', () => {
 
   describe('Loss Per Head Management', () => {
     it('should get loss per head from session service', () => {
-      sessionService.getLossPerHead.and.returnValue(50);
+      sessionService.getLossPerHead.mockReturnValue(50);
       const result = service.getLossPerHead();
       expect(result).toBe(50);
       expect(sessionService.getLossPerHead).toHaveBeenCalled();
@@ -86,7 +86,7 @@ describe('SessionFacade', () => {
         selectedPlayers: ['Player1', 'Player2'],
         lossPerHead: 50
       };
-      sessionService.getSession.and.returnValue(sessionState);
+      sessionService.getSession.mockReturnValue(sessionState);
       const result = service.getSession();
       expect(result).toEqual(sessionState);
       expect(sessionService.getSession).toHaveBeenCalled();

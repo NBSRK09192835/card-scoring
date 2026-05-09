@@ -14,17 +14,17 @@ describe('GuestComponent', () => {
 
   beforeEach(async () => {
     const sessionFacadeMock = {
-      getUsername: jasmine.createSpy('getUsername'),
-      setUsername: jasmine.createSpy('setUsername'),
-      clearSession: jasmine.createSpy('clearSession')
+      getUsername: jest.fn(),
+      setUsername: jest.fn(),
+      clearSession: jest.fn()
     };
 
     const toastServiceMock = {
-      show: jasmine.createSpy('show')
+      show: jest.fn()
     };
     
     const routerMock = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jest.fn()
     };
 
     await TestBed.configureTestingModule({
@@ -49,7 +49,7 @@ describe('GuestComponent', () => {
   });
 
   it('should initialize with empty form on first load', () => {
-    sessionFacade.getUsername.and.returnValue('');
+    sessionFacade.getUsername.mockReturnValue('');
     fixture.detectChanges();
 
     expect(component.guestForm.get('username')?.value).toBe('');
@@ -57,14 +57,14 @@ describe('GuestComponent', () => {
 
   describe('Form Initialization', () => {
     it('should populate form with existing username if not Guest', () => {
-      sessionFacade.getUsername.and.returnValue('ExistingUser');
+      sessionFacade.getUsername.mockReturnValue('ExistingUser');
       fixture.detectChanges();
 
       expect(component.guestForm.get('username')?.value).toBe('ExistingUser');
     });
 
     it('should not populate form if existing username is Guest', () => {
-      sessionFacade.getUsername.and.returnValue('Guest');
+      sessionFacade.getUsername.mockReturnValue('Guest');
       fixture.detectChanges();
 
       expect(component.guestForm.get('username')?.value).toBe('');
@@ -81,7 +81,7 @@ describe('GuestComponent', () => {
 
   describe('startGuest Method', () => {
     beforeEach(() => {
-      sessionFacade.getUsername.and.returnValue('');
+      sessionFacade.getUsername.mockReturnValue('');
     });
 
     it('should show error when username is empty', () => {
@@ -154,7 +154,7 @@ describe('GuestComponent', () => {
 
   describe('Existing Session Handling', () => {
     it('should show error when same username already exists', () => {
-      sessionFacade.getUsername.and.returnValue('ExistingUser');
+      sessionFacade.getUsername.mockReturnValue('ExistingUser');
       component.guestForm.get('username')?.setValue('ExistingUser');
       component.startGuest();
 
@@ -165,7 +165,7 @@ describe('GuestComponent', () => {
     });
 
     it('should be case-insensitive when checking for duplicate username', () => {
-      sessionFacade.getUsername.and.returnValue('existinguser');
+      sessionFacade.getUsername.mockReturnValue('existinguser');
       component.guestForm.get('username')?.setValue('ExistingUser');
       component.startGuest();
 
@@ -176,8 +176,8 @@ describe('GuestComponent', () => {
     });
 
     it('should prompt for replacement when session exists', () => {
-      sessionFacade.getUsername.and.returnValue('OldUser');
-      spyOn(window, 'confirm').and.returnValue(true);
+      sessionFacade.getUsername.mockReturnValue('OldUser');
+      jest.spyOn(window, 'confirm').mockReturnValue(true);
 
       component.guestForm.get('username')?.setValue('NewUser');
       component.startGuest();
@@ -188,8 +188,8 @@ describe('GuestComponent', () => {
     });
 
     it('should not replace session when user declines', () => {
-      sessionFacade.getUsername.and.returnValue('OldUser');
-      spyOn(window, 'confirm').and.returnValue(false);
+      sessionFacade.getUsername.mockReturnValue('OldUser');
+      jest.spyOn(window, 'confirm').mockReturnValue(false);
 
       component.guestForm.get('username')?.setValue('NewUser');
       component.startGuest();
@@ -199,8 +199,8 @@ describe('GuestComponent', () => {
     });
 
     it('should clear session and create new one when user confirms replacement', () => {
-      sessionFacade.getUsername.and.returnValue('OldUser');
-      spyOn(window, 'confirm').and.returnValue(true);
+      sessionFacade.getUsername.mockReturnValue('OldUser');
+      jest.spyOn(window, 'confirm').mockReturnValue(true);
 
       component.guestForm.get('username')?.setValue('NewUser');
       component.startGuest();
@@ -211,8 +211,8 @@ describe('GuestComponent', () => {
     });
 
     it('should show success toast after replacing session', () => {
-      sessionFacade.getUsername.and.returnValue('OldUser');
-      spyOn(window, 'confirm').and.returnValue(true);
+      sessionFacade.getUsername.mockReturnValue('OldUser');
+      jest.spyOn(window, 'confirm').mockReturnValue(true);
 
       component.guestForm.get('username')?.setValue('NewUser');
       component.startGuest();
@@ -226,7 +226,7 @@ describe('GuestComponent', () => {
 
   describe('Edge Cases', () => {
     beforeEach(() => {
-      sessionFacade.getUsername.and.returnValue('');
+      sessionFacade.getUsername.mockReturnValue('');
     });
 
     it('should handle username with special characters', () => {
@@ -263,7 +263,7 @@ describe('GuestComponent', () => {
 
   describe('Direct Method Call vs Form Submission', () => {
     beforeEach(() => {
-      sessionFacade.getUsername.and.returnValue('');
+      sessionFacade.getUsername.mockReturnValue('');
     });
 
     it('should accept username as parameter when provided', () => {

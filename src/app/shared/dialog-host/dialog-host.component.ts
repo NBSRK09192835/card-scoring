@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogHostData {
   type: 'prompt' | 'confirm';
@@ -20,13 +20,11 @@ export interface DialogHostData {
 })
 export class DialogHostComponent {
   value = '';
-  public data: DialogHostData = {
-    type: 'prompt',
-    title: '',
-    message: ''
-  };
 
-  constructor(public dialogRef: MatDialogRef<DialogHostComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogHostComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogHostData
+  ) {}
 
   confirm(): void {
     if (this.data.type === 'prompt') {
